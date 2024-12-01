@@ -6,3 +6,41 @@ inherit_gem: { rubocop-rails-omakase: rubocop.yml }
 # # Use `[a, [b, c]]` not `[ a, [ b, c ] ]`
 # Layout/SpaceInsideArrayLiteralBrackets:
 #   Enabled: false
+require:
+  - rubocop-rails
+
+AllCops:
+  NewCops: enable
+  Exclude:
+    - 'db/**/*'
+    - 'config/**/*'
+    - 'script/**/*'
+    - 'bin/**/*'
+    - 'vendor/**/*'
+    - 'tmp/**/*'
+    - '**/*.erb'  # This will exclude all ERB files
+
+Layout/LineLength:
+  Max: 120
+  Exclude:
+    - 'app/views/**/*'
+
+# This is important for ERB files
+Style/FrozenStringLiteralComment:
+  Enabled: false
+  Exclude:
+    - 'app/views/**/*'
+
+Metrics/BlockLength:
+  Exclude:
+    - 'app/views/**/*'
+
+Layout/InitialIndentation:
+  Enabled: false
+  Exclude:
+    - 'app/views/**/*'
+    
+# Add this to explicitly exclude ERB files
+Style/Documentation:
+  Exclude:
+    - 'app/views/**/*'
