@@ -18,16 +18,15 @@
     <%= javascript_importmap_tags %>
   </head>
 
-  <body>
-    <p>test</p>
-    
-    <main class="container mx-auto mt-28 px-5 flex">
-      <ul>
-        <li>
-          <%= button_to 'Logout', destroy_user_session_path, method: :delete %>
-        </li>
-      </ul>
+  <body class='min-h-screen flex flex-col'>
+    <nav>
+      <p>Placeholder</p>
+    </nav>
+    <main class='flex-1'>
       <%= yield %>
     </main>
+    <footer>
+      <p>Placeholder</p>
+    </footer>
   </body>
 </html>
