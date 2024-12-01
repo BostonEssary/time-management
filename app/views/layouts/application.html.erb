@@ -19,7 +19,14 @@
   </head>
 
   <body>
+    <p>test</p>
+    
     <main class="container mx-auto mt-28 px-5 flex">
+      <ul>
+        <li>
+          <%= button_to 'Logout', destroy_user_session_path, method: :delete %>
+        </li>
+      </ul>
       <%= yield %>
     </main>
   </body>
