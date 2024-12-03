@@ -18,14 +18,12 @@
     <%= javascript_importmap_tags %>
   </head>
 
-  <body class='min-h-screen flex flex-col'>
-    <nav>
-      <p>Placeholder</p>
-    </nav>
+  <body class='min-h-screen h-screen flex flex-col'>
+    <%= render "dashboard/nav" %>
     <main class='flex-1'>
       <%= yield %>
     </main>
-    <footer>
+    <footer class='h-16'>
       <p>Placeholder</p>
     </footer>
   </body>
