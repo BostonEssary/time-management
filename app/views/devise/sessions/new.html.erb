@@ -1,13 +1,9 @@
-<div
-  class="
-    h-full bg-gradient-to-b from-primary from-0% via-primary via-35% to-gray-100
-    to-35% flex items-center justify-center
-  "
->
+<div class=" h-full bg-primary flex items-center justify-center">
 
   <div
     class='
-      max-w-96 h-fit flex flex-col gap-2 rounded-md m-4 p-4 shadow-xl bg-white
+      max-w-96 h-fit flex flex-grow flex-col gap-2 rounded-md m-4 p-4 shadow-xl
+      bg-white
     '
   >
 
@@ -44,7 +40,12 @@
           <% end %>
 
           <div class="actions">
-            <%= f.submit "Log in", class: "bg-primary text-white p-2 w-full" %>
+            <%= f.submit "Log in", class: "bg-primary text-white p-2 w-full rounded-md" %>
+          </div>
+
+          <div class='flex gap-1 mx-auto'>
+            <p>Don't have an account?</p>
+            <%= link_to "Sign Up!", new_user_registration_path, class: "text-blue-500" %>
           </div>
 
         </div>
