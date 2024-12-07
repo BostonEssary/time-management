@@ -4,5 +4,5 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
-  validates :date_of_birth, comparison: { less_than_or_equal_to: 21.years.ago }
+  validates :date_of_birth, comparison: { less_than_or_equal_to: 21.years.ago, message: 'You must be 21 or older.' }
 end
