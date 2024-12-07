@@ -9,7 +9,7 @@
   </div>
   <div>
     <% if user_signed_in? %>
-      <%= button_to "Logout", destroy_user_session_path %>
+      <%= button_to "Logout", destroy_user_session_path, method: :delete %>
     <% else %>
       <%= link_to "Sign In",
       new_user_session_path,
@@ -48,7 +48,10 @@
 
       <div class='pt-4 border-t border-gray-200'>
         <% if user_signed_in? %>
-          <%= button_to "Logout", destroy_user_session_path, class: "w-full text-left py-2" %>
+          <%= button_to "Logout",
+          destroy_user_session_path,
+          method: :delete,
+          class: "w-full text-left py-2" %>
         <% else %>
           <%= link_to "Sign In",
           new_user_session_path,
