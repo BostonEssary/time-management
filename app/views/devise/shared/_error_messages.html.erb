@@ -1,8 +1,14 @@
 <% if resource.errors.any? %>
-  <div id="error_explanation" data-turbo-cache="false">
+  <div
+    id="error_explanation"
+    class='bg-red-200 text-red-500 p-4 rounded-md'
+    data-turbo-cache="false"
+  >
+    <h3 class='text-xl font-bold'>The following errors occured:
+    </h3>
     <ul>
       <% resource.errors.full_messages.each do |message| %>
-    <li><%= message %></li>
+        <li><%= message %></li>
       <% end %>
     </ul>
   </div>
