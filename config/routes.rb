@@ -15,4 +15,5 @@ Rails.application.routes.draw do
   root "dashboard#index"
 
   resources :dashboard
+  resources :users, only: [:show]
 end
