@@ -47,8 +47,9 @@ group :development, :test do
 
   gem "rspec-rails"
   # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
-  gem "rubocop-rails"
+  gem "rubocop-rails-omakase"
   gem "rubocop"
+  gem "ruby-lsp"
 end
 
 group :development do

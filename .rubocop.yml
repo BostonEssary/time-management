@@ -42,5 +42,6 @@ Layout/InitialIndentation:
     
 # Add this to explicitly exclude ERB files
 Style/Documentation:
+  Enabled: false
   Exclude:
     - 'app/views/**/*'
