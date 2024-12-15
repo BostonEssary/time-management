@@ -1,0 +1,16 @@
+<% if current_user.id == user.id %>
+  <%= link_to edit_profile_path  do %>
+    <i class="fa-solid fa-pen-to-square"></i>
+  <% end %>
+<% end %>
+<% unless current_user.id == user.id %>
+  <% if following %>
+    <%= button_to follow_path(following.id), method: :delete do %>
+      <i class='fa-solid fa-x'></i>
+    <% end %>
+  <% else %>
+    <%= button_to follows_path, params: { user_id: user.id } do %>
+      <i class="fa-solid fa-plus"></i>
+    <% end %>
+  <% end %>
+<% end %>

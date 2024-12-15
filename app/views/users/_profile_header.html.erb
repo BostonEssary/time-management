@@ -5,33 +5,9 @@
     </div>
     <div class='flex items-center flex gap-1'>
       <p class='font-bold'><%= user.username %></p>
-      <% if current_user.id == user.id %>
-        <%= link_to edit_profile_path  do %>
-          <i class="fa-regular fa-pen-to-square"></i>
-        <% end %>
-      <% end %>
-      <% unless current_user.id == user.id %>
-        <% if @following %>
-          <%= button_to follow_path(@following.id), method: :delete do %>
-            <i class='fa-solid fa-x'></i>
-          <% end %>
-        <% else %>
-          <%= button_to follows_path, params: { user_id: user.id } do %>
-            <i class="fa-solid fa-plus"></i>
-          <% end %>
-        <% end %>
-      <% end %>
+      <%= render "users/profile_actions", user:, following: @following %>
     </div>
-    <div class='flex gap-4'>
-      <div class='flex flex-col items-center'>
-        <p class='font-bold'><%= user.followers.size %></p>
-        <p>Followers</p>
-      </div>
-      <div class='flex flex-col items-center'>
-        <p class='font-bold'><%= user.followees.size %></p>
-        <p>Following</p>
-      </div>
-    </div>
+    <%= render "users/follower_counts", user: %>
   </div>
   <div class='flex flex-col gap-4'>
     <div class='flex flex-col gap-2 items-start'>
