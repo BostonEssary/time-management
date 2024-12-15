@@ -15,5 +15,6 @@ Rails.application.routes.draw do
   root "dashboard#index"
 
   resources :dashboard
+  resources :follows, only: [:create, :destroy]
   resources :users, only: [:show]
 end
