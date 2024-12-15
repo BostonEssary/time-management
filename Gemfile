@@ -50,6 +50,8 @@ group :development, :test do
   gem "rubocop-rails-omakase"
   gem "rubocop"
   gem "ruby-lsp"
+  gem "factory_bot_rails"
+  gem "faker"
 end
 
 group :development do
