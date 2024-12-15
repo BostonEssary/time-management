@@ -1,6 +1,8 @@
 class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
+  EXPERIENCE_LEVELS = ['sapling', 'mature', 'old growth']
+  CONSUMPTION_METHODS = ['bongs', 'joints', 'blunts', 'edibles', 'concentrates']
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 

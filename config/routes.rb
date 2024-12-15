@@ -16,5 +16,6 @@ Rails.application.routes.draw do
 
   resources :dashboard
   resources :follows, only: [:create, :destroy]
-  resources :users, only: [:show]
+  resources :users, only: [:show, :edit, :update]
+  resource :profile, only: [:show, :edit, :update]
 end
