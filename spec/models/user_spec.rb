@@ -36,4 +36,17 @@ RSpec.describe User, type: :model do
       end
     end
   end
+
+  context 'associations' do
+    context 'follows' do
+      let!(:follow) { create(:follow, followee: user, follower: user1) }
+      it 'increases follow count when a follow association is made' do
+        expect user.followers.count == 1
+      end
+
+      it 'increases the following count' do
+        expect user1.followees.count == 1
+      end
+    end
+  end
 end
