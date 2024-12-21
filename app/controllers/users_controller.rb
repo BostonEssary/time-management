@@ -8,10 +8,12 @@ class UsersController < ApplicationController
   end
 
   def update
+    return head :forbidden unless @user == current_user
+
     if @user.update(user_params)
       redirect_to profile_path
     else
-      render :edit, status: :unprocessable_entity
+      render "profiles/edit", status: :unprocessable_entity
     end
   end
 

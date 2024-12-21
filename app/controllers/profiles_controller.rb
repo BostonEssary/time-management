@@ -1,15 +1,18 @@
 class ProfilesController < ApplicationController
   before_action :set_user
-  def show 
+  def show
   end
 
   def edit
   end
 
 
-  private 
+  private
 
   def set_user
     @user = current_user
+  end
+
+  def profile_params
   end
 end

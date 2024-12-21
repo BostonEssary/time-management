@@ -1,0 +1,8 @@
+<%# locals: (resource: nil) %>
+<% if resource.errors.any? %>
+  <div class='bg-red-200 text-red-500 p-2 rounded-md'>
+    <% resource.errors.full_messages.each do |message| %>
+      <p><%= message %></p>
+    <% end %>
+  </div>
+<% end %>

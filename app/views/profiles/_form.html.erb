@@ -1,7 +1,34 @@
-<%= form_with model: user, method: :patch do |form| %>
-  <div>
+<%= form_with url: edit_profile, method: :patch, class: 'flex flex-col gap-4 ' do |form| %>
+  <%= render "shared/form_errors", resource: user %>
+
+  <div class='flex flex-col gap-2'>
     <%= form.label :username %>
     <%= form.text_field :username %>
   </div>
 
+  <div class='flex flex-col gap-2'>
+    <%= form.label :experience_level %>
+    <%= form.collection_select :experience_level,
+                           User::EXPERIENCE_LEVELS,
+                           :to_s,
+                           :titleize,
+                           { include_blank: "Select your experience level" } %>
+  </div>
+
+  <div class='flex flex-col gap-2'>
+    <%= form.label :consumption_preferences %>
+    <div class='flex flex-wrap gap-2'>
+      <%= form.collection_check_boxes :consumption_preferences,
+                              User::CONSUMPTION_METHODS,
+                              :to_s,
+                              :titleize do |box| %>
+        <%= content_tag :div, class: 'flex items-center' do %>
+          <%= box.check_box(class: "mr-2 text-primary rouned") %>
+          <%= box.label(class: "text-gray-700") %>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+
+  <%= form.submit "Save changes", class: "bg-primary text-primary-50 rounded p-2" %>
 <% end %>

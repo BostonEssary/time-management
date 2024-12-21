@@ -1,4 +1,6 @@
 <%= form_with model: user, method: :patch, class: 'flex flex-col gap-4 ' do |form| %>
+  <%= render "shared/form_errors", resource: user %>
+
   <div class='flex flex-col gap-2'>
     <%= form.label :username %>
     <%= form.text_field :username %>
@@ -10,7 +12,7 @@
                            User::EXPERIENCE_LEVELS,
                            :to_s,
                            :titleize,
-                           { include_blank: "Select your experience_level" } %>
+                           { include_blank: "Select your experience level" } %>
   </div>
 
   <div class='flex flex-col gap-2'>
