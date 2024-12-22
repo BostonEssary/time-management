@@ -6,6 +6,16 @@ class ProfilesController < ApplicationController
   def edit
   end
 
+  def update
+    return head :forbidden unless @user == current_user
+
+    if @user.update(user_params)
+      redirect_to profile_path
+    else
+      render "profiles/edit", status: :unprocessable_entity
+    end
+  end
+
 
   private
 
@@ -13,6 +23,7 @@ class ProfilesController < ApplicationController
     @user = current_user
   end
 
-  def profile_params
+  def user_params
+    params.require(:user).permit(:username, :experience_level, { consumption_preferences: [] })
   end
 end

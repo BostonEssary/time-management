@@ -1,11 +1,6 @@
 # Omakase Ruby styling for Rails
 inherit_gem: { rubocop-rails-omakase: rubocop.yml }
 
-# Overwrite or add rules to create your own house style
-#
-# # Use `[a, [b, c]]` not `[ a, [ b, c ] ]`
-# Layout/SpaceInsideArrayLiteralBrackets:
-#   Enabled: false
 require:
   - rubocop-rails
 
@@ -18,14 +13,13 @@ AllCops:
     - 'bin/**/*'
     - 'vendor/**/*'
     - 'tmp/**/*'
-    - '**/*.erb'  # This will exclude all ERB files
+    - '**/*.erb'
 
 Layout/LineLength:
   Max: 120
   Exclude:
     - 'app/views/**/*'
 
-# This is important for ERB files
 Style/FrozenStringLiteralComment:
   Enabled: false
   Exclude:
@@ -36,12 +30,35 @@ Metrics/BlockLength:
     - 'app/views/**/*'
 
 Layout/InitialIndentation:
-  Enabled: false
+  Enabled: true
   Exclude:
     - 'app/views/**/*'
     
-# Add this to explicitly exclude ERB files
 Style/Documentation:
   Enabled: false
   Exclude:
     - 'app/views/**/*'
+
+Layout/IndentationConsistency:
+  Enabled: true
+  EnforcedStyle: normal
+
+Layout/IndentationWidth:
+  Enabled: true
+  Width: 2
+
+Layout/FirstArgumentIndentation:
+  Enabled: true
+  EnforcedStyle: consistent
+
+Layout/ArgumentAlignment:
+  Enabled: true
+  EnforcedStyle: with_first_argument
+
+Layout/EndAlignment:
+  Enabled: true
+  EnforcedStyleAlignWith: start_of_line
+
+Layout/DefEndAlignment:
+  Enabled: true
+  EnforcedStyleAlignWith: def

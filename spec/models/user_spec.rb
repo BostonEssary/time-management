@@ -44,7 +44,7 @@ RSpec.describe User, type: :model do
         expect user.followers.count == 1
       end
 
-      it 'increases the following count' do
+      it 'increases the following count'
         expect user1.followees.count == 1
       end
     end
