@@ -12,7 +12,7 @@ RSpec.describe "Follows", type: :request do
     let(:user1) { create(:user) }
 
     it 'should create a new follow' do
-      expect { subject }.to change(Follow, :count).to(1)
+      expect { subject }.to change(Follow, :count).by(1)
     end
   end
 end
