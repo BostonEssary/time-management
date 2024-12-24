@@ -7,12 +7,28 @@ RSpec.describe "Follows", type: :request do
     sign_in user
   end
   describe 'POST /follows' do
-    subject { post follows_path, params: { user_id: user1.id } }
-
     let(:user1) { create(:user) }
 
-    it 'should create a new follow' do
-      expect { subject }.to change(Follow, :count).by(1)
+    context 'with good params' do
+      subject { post follows_path, params: { user_id: user1.id } }
+
+      it 'should return a 302 if the response was successful' do
+        subject
+        expect(response).to have_http_status(302)
+      end
+
+      it 'should create a new follow' do
+        expect { subject }.to change(Follow, :count).by(1)
+      end
+    end
+
+    context 'with bad params' do
+      subject { post follows_path, params: { user_id: nil } }
+
+      it 'returns a 422 when no id is passed' do
+        subject
+        expect(response).to have_http_status(422)
+      end
     end
   end
 end
