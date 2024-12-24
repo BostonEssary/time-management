@@ -20,6 +20,11 @@ RSpec.describe "Follows", type: :request do
       it 'should create a new follow' do
         expect { subject }.to change(Follow, :count).by(1)
       end
+
+      it 'should redirect to the followee user show page' do
+        subject
+        expect(response).to redirect_to user_path(user1.id)
+      end
     end
 
     context 'with bad params' do
