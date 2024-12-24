@@ -1,13 +1,14 @@
 class FollowsController < ApplicationController
-  before_action :set_user, only: :create
+  before_action :set_user
+  before_action :set_followee, only: :create
 
   def create
     @follow = Follow.new(follower_id: current_user.id, followee_id: params[:user_id])
 
     if @follow.save
-      redirect_to user_path(params[:user_id]), notice: "You are now following #{@user.username}"
+      redirect_to user_path(params[:user_id]), notice: "You are now following #{@followee.username}"
     else
-      render "profiles/show", status: :unprocessable_entity
+      render "dashboard/index", status: :unprocessable_entity
     end
   end
 
@@ -24,9 +25,13 @@ class FollowsController < ApplicationController
   private
 
   def set_user
-    @user = User.find_by(id: follow_params[:user_id])
+    @user = current_user
+  end
 
-    if @user.nil?
+  def set_followee
+    @followee = User.find_by(id: follow_params[:user_id])
+
+    if @followee.nil?
       flash[:alert] = "User not found"
       render "profiles/show", status: :unprocessable_entity
     end
