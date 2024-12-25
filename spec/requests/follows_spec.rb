@@ -36,4 +36,22 @@ RSpec.describe "Follows", type: :request do
       end
     end
   end
+
+  describe 'DELETE /follow/:id' do
+    let(:user1) { create(:user) }
+    let!(:follow) { create(:follow, follower: user, followee: user1) }
+
+    context 'with an existing follow id' do
+      subject { delete follow_path(follow.id) }
+
+      it 'should have an http status of 302' do
+        subject
+        expect(response).to have_http_status(302)
+      end
+
+      it 'should delete a follow' do
+        expect { subject }.to change(Follow, :count).by(-1)
+      end
+    end
+  end
 end
