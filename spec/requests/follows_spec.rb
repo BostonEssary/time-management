@@ -53,5 +53,14 @@ RSpec.describe "Follows", type: :request do
         expect { subject }.to change(Follow, :count).by(-1)
       end
     end
+
+    context 'when a follow can not be found' do
+      subject { delete follow_path(Follow.maximum(:id).next) }
+
+      it 'should have an http status of 302' do
+        subject
+        expect(response).to have_http_status(422)
+      end
+    end
   end
 end
