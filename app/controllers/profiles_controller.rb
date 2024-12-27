@@ -10,7 +10,7 @@ class ProfilesController < ApplicationController
     return head :forbidden unless @user == current_user
 
     if @user.update(user_params)
-      redirect_to profile_path
+      redirect_to profile_path, notice: "Profile updated successfully!"
     else
       render "profiles/edit", status: :unprocessable_entity
     end

@@ -19,9 +19,20 @@
     <script src="https://kit.fontawesome.com/d89ddd3e98.js" crossorigin="anonymous"></script>
   </head>
 
-  <body class='min-h-screen h-screen flex flex-col'>
+  <body class='min-h-screen h-screen flex flex-col bg-primary'>
     <%= render "dashboard/nav" %>
-    <main class='flex-1'>
+    <main class='flex-1 relative'>
+      <% flash.each do |type, msg| %>
+        <div
+          class='
+            flex justify-between items-center gap-2 w-fit absolute top-0 left-1/2
+            -translate-x-1/2 p-4 bg-primary-200 rounded-md
+          '
+        >
+          <%= flash_symbol(type) %>
+          <%= msg %>
+        </div>
+      <% end %>
       <%= yield %>
     </main>
     <footer class='h-16'>
