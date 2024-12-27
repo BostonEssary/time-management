@@ -4,7 +4,6 @@ import { Controller } from "@hotwired/stimulus"
 export default class extends Controller {
   static targets = [ 'alert']
   connect() {
-    console.log('alerts controller connected')
   }
 
   alertTargetConnected() {
@@ -16,6 +15,5 @@ export default class extends Controller {
   dismiss(event) {
     event.target
     this.alertTarget.remove()
-    console.log('removed')
   }
 }
