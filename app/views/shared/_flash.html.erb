@@ -1,0 +1,16 @@
+<% flash.each do |type, msg| %>
+  <div
+    class='
+      flex justify-between items-center gap-2 w-fit absolute top-0 left-1/2
+      -translate-x-1/2 p-4 <%= flash_classes(type) %> rounded-md
+    '
+    data-controller='alerts'
+    data-alerts-target='alert'
+  >
+    <%= flash_symbol(type) %>
+    <%= msg %>
+    <%= button_to '', data: { action: 'click->alerts#dismiss' } do %>
+      <i class="fa-solid fa-xmark"></i>
+    <% end %>
+  </div>
+<% end %>
