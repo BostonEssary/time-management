@@ -5,12 +5,16 @@
 <% end %>
 <% unless current_user.id == user.id %>
   <% if following %>
-    <%= button_to follow_path(following.id), method: :delete do %>
-      <i class='fa-solid fa-x'></i>
+    <%= button_to follow_path(following.id), class: "bg-secondary-200 rounded-md p-1", method: :delete do %>
+      <div>
+        <p>Unfollow</p>
+      </div>
     <% end %>
   <% else %>
-    <%= button_to follows_path, params: { user_id: user.id } do %>
-      <i class="fa-solid fa-plus"></i>
+    <%= button_to follows_path, class: 'bg-primary-200 rounded-md p-1', params: { user_id: user.id } do %>
+      <div>
+        <p>Follow</p>
+      </div>
     <% end %>
   <% end %>
 <% end %>

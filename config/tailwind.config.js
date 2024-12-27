@@ -28,6 +28,21 @@ module.exports = {
           light: '#40916C',      // Convenience light reference
           dark: '#133226',       // Convenience dark reference
         },
+        secondary: {
+          DEFAULT: '#FF8E6E',    // Main secondary color (coral)
+          50: '#FFF5F2',         // Lightest tint - Very subtle coral background
+          100: '#FFE6DF',        // Light tint - Soft coral for hover states
+          200: '#FFD0C2',        // Lighter tint - Subtle coral accents
+          300: '#FFB4A0',        // Light-medium tint - Stronger coral accents
+          400: '#FFA186',        // Medium-light - Prominent coral
+          500: '#FF8E6E',        // Base coral color (same as DEFAULT)
+          600: '#F27A59',        // Darker tone - Good for interactive elements
+          700: '#E56547',        // Dark tone - Strong emphasis
+          800: '#D15035',        // Darker shade - Very strong emphasis
+          900: '#BC3B23',        // Darkest shade - Maximum contrast
+          light: '#FFA186',      // Convenience light reference (400)
+          dark: '#E56547',       // Convenience dark reference (700)
+        },
         // Common system colors
         error: '#DC2626',        // Red for errors
         warning: '#F59E0B',      // Amber for warnings
