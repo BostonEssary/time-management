@@ -18,4 +18,5 @@ Rails.application.routes.draw do
   resources :follows, only: [ :create, :destroy ]
   resources :users, only: [ :show, :edit, :update ]
   resource :profile, only: [ :show, :edit, :update ]
+  resource :flowers
 end
