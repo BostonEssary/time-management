@@ -72,3 +72,5 @@ gem "ruby-vips", "~> 2.2"
 gem "image_processing", "~> 1.13"
 
 gem "aws-sdk-s3", "~> 1.176"
+
+gem "requestjs-rails", "~> 0.0.12"
