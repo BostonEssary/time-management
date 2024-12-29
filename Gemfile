@@ -66,3 +66,7 @@ group :test do
   gem "capybara"
   gem "selenium-webdriver"
 end
+
+gem "ruby-vips", "~> 2.2"
+
+gem "image_processing", "~> 1.13"
