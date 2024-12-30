@@ -3,6 +3,11 @@ class FlowersController < ApplicationController
   end
 
   def create
+    if Flower.create(flower_params)
+      redirect_to root_path, notice: 'Flower created'
+    else
+      render :new, status: :unprocessable_entity
+    end
   end
 
   def show
@@ -19,5 +24,11 @@ class FlowersController < ApplicationController
   end
 
   def delete
+  end
+
+  private
+
+  def flower_params
+    params.require(:flower).permit(:name, :thc, :strain, :brand_id)
   end
 end
