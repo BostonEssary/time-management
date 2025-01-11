@@ -3,6 +3,11 @@
     <%= @flower.name %>
     <div>
       <%= image_tag @flower.avatar.variant(:thumb), class: "rounded-full" %>
+      <% if @flower.images.present? %>
+        <% @flower.images.each do |image| %>
+          <%= image_tag image.variant(:thumb) %>
+        <% end %>
+      <% end %>
     </div>
   </div>
 </div>

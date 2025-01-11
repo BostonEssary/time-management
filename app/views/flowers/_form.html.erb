@@ -25,6 +25,11 @@
     <%= form.file_field :avatar %>
   </div>
 
+  <div class='flex flex-col gap-2'>
+    <%= form.label :images %>
+    <%= form.file_field :images, multiple: true %>
+  </div>
+
   <div
     data-controller="autocomplete"
     data-autocomplete-url-value="/brands/search"

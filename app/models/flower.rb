@@ -27,7 +27,18 @@ class Flower < ApplicationRecord
   has_one_attached :avatar do |attachable|
     attachable.variant :thumb, resize_to_fill: [ 100, 100 ]
   end
-  has_many_attached :images
+  has_many_attached :images do |attachable|
+    attachable.variant :thumb, resize_to_fill: [ 500, 500 ]
+    attachable.variant :medium, resize_to_fill: [ 800, 800 ]
+    attachable.variant :hero, resize_to_fill: [ 1200, 800 ]
+  end
+
+
+  def formatted_images
+    images do |attachable|
+      attachable.variant :thumb, resize_to_fill: [ 500, 500 ]
+    end
+  end
 
   validates :name, presence: true
   validates :name, uniqueness: { scope: :brand, message: "A product with that name already exists for that brand" }
