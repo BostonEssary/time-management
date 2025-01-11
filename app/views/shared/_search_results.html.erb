@@ -1,0 +1,7 @@
+<% results.each do |result| %>
+  <li
+    class="list-group-item bg-white active:bg-blue-500"
+    role="option"
+    data-autocomplete-value="<%= result.id %>"
+  ><%= result.name %></li>
+<% end %>
