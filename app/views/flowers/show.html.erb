@@ -1,4 +1,8 @@
-<div>
-  <h1 class="font-bold text-4xl">Flowers#show</h1>
-  <p>Find me in app/views/flowers/show.html.erb</p>
+<div class='h-full flex'>
+  <div class='flex-1 flex flex-col gap-2 m-8 rounded-md bg-primary-50 '>
+    <%= @flower.name %>
+    <div>
+      <%= image_tag @flower.avatar.variant(:thumb), class: "rounded-full" %>
+    </div>
+  </div>
 </div>

@@ -1,4 +1,6 @@
 class FlowersController < ApplicationController
+  before_action :set_flower, only: [ :show ]
+
   def index
   end
 
@@ -29,6 +31,11 @@ class FlowersController < ApplicationController
   private
 
   def flower_params
-    params.require(:flower).permit(:name, :thc, :strain, :brand_id)
+    params.require(:flower).permit(:name, :thc, :strain, :brand_id, :avatar)
+  end
+
+  def set_flower
+    @flower = Flower.find_by(id: params[:id])
+    redirect_to root_path, alert: "Flower could not be found" unless @flower.present?
   end
 end
