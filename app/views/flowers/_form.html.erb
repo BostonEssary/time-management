@@ -20,6 +20,11 @@
                            { include_blank: "What is the strain of the flower?" } %>
   </div>
 
+  <div class="flex flex-col gap-2">
+    <%= form.label :avatar %>
+    <%= form.file_field :avatar %>
+  </div>
+
   <div
     data-controller="autocomplete"
     data-autocomplete-url-value="/brands/search"
