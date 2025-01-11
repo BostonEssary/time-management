@@ -14,11 +14,16 @@ Rails.application.routes.draw do
   # root "posts#index"
   root "dashboard#index"
 
+  concern :searchable do
+    get :search, on: :collection
+  end
+
   resources :dashboard
   resources :follows, only: [ :create, :destroy ]
   resources :users, only: [ :show, :edit, :update ]
   resource :profile, only: [ :show, :edit, :update ]
   resources :flowers
+  resources :brands, concerns: :searchable
 
   namespace :api do
     resources :brands, only: [ :index ]

@@ -1,7 +1,7 @@
 class Api::BrandsController < ApplicationController
   def index
-    @brands = if params[:query].present?
-      Brand.where("name ILIKE ?", "%#{params[:query]}%")
+    @brands = if params[:q].present?
+      Brand.where("name ILIKE ?", "%#{params[:q]}%")
     else
       Brand.all
     end
