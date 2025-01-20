@@ -2,6 +2,7 @@ class FlowersController < ApplicationController
   before_action :set_flower, only: [ :show ]
 
   def index
+    @flowers = Flower.all
   end
 
   def create
