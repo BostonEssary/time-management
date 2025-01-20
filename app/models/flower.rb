@@ -32,6 +32,6 @@ class Flower < ApplicationRecord
     attachable.variant :medium, resize_to_fill: [ 800, 800 ]
   end
 
-  validates :name, :avatar, presence: true
+  validates :name, :avatar, :images, presence: true
   validates :name, uniqueness: { scope: :brand, message: "A product with that name already exists for that brand" }
 end
