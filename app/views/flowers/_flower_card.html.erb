@@ -1,27 +1,21 @@
-<div class='flex flex-col bg-primary-50'>
-  <div class='flex items-center gap-2 '>
+<div class='flex flex-col gap-2 bg-primary-50 w-72'>
+  <div class='flex items-center gap-2 px-4 py-2'>
     <%= image_tag flower.avatar.variant(:small_thumb), class: "rounded-full" %>
     <h2><%= flower.name %></h2>
   </div>
-  <div data-controller="carousel" class="swiper">
-    <div class="swiper-wrapper">
-      <div class="swiper-slide"><%= image_tag flower.images.first.variant(:thumb) %></div>
-    </div>
+  <div>
+
+    <swiper-container navigation="true" pagination="true" scrollbar="true">
+      <% flower.images.each do | image | %>
+        <swiper-slide>
+          <div class="grid place-items-center">
+            <%= image_tag image.variant(:thumb) %>
+
+          </div>
+        </swiper-slide>
+        <%=  %>
+      <% end %>
+    </swiper-container>
+
   </div>
 </div>
-<swiper-container
-  navigation="true"
-  pagination="true"
-  scrollbar="true"
-  effect="coverflow"
->
-  <swiper-slide>
-    <div class="h-64 grid place-items-center bg-stone-50">Slide 1</div>
-  </swiper-slide>
-  <swiper-slide>
-    <div class="h-64 grid place-items-center bg-stone-50">Slide 2</div>
-  </swiper-slide>
-  <swiper-slide>
-    <div class="h-64 grid place-items-center bg-stone-50">Slide 3</div>
-  </swiper-slide>
-</swiper-container>
