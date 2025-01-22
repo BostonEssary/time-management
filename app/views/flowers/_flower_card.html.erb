@@ -1,21 +1,22 @@
-<div class='flex flex-col gap-2 bg-primary-50 w-72'>
-  <div class='flex items-center gap-2 px-4 py-2'>
-    <%= image_tag flower.avatar.variant(:small_thumb), class: "rounded-full" %>
-    <h2><%= flower.name %></h2>
+<%= link_to flower_path(flower) do %>
+  <div class='flex flex-col gap-2 bg-primary-50 w-72 p-4 rounded'>
+    <div class='flex items-center gap-2'>
+      <%= image_tag flower.avatar.variant(:small_thumb), class: "rounded-full" %>
+      <h2><%= flower.name %></h2>
+    </div>
+    <div>
+      <swiper-container navigation="true" pagination="true" scrollbar="true">
+        <% flower.images.each do | image | %>
+          <swiper-slide>
+            <div class="grid place-items-center">
+              <%= image_tag image.variant(:thumb) %>
+
+            </div>
+          </swiper-slide>
+          <%=  %>
+        <% end %>
+      </swiper-container>
+    </div>
   </div>
-  <div>
 
-    <swiper-container navigation="true" pagination="true" scrollbar="true">
-      <% flower.images.each do | image | %>
-        <swiper-slide>
-          <div class="grid place-items-center">
-            <%= image_tag image.variant(:thumb) %>
-
-          </div>
-        </swiper-slide>
-        <%=  %>
-      <% end %>
-    </swiper-container>
-
-  </div>
-</div>
+<% end %>
