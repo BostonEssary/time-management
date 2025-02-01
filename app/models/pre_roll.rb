@@ -20,5 +20,6 @@
 #  fk_rails_...  (brand_id => brands.id)
 #
 class PreRoll < ApplicationRecord
+  include CannabisProduct
   belongs_to :brand
 end

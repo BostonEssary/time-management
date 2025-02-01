@@ -20,6 +20,8 @@
 #  fk_rails_...  (brand_id => brands.id)
 #
 class Flower < ApplicationRecord
+  include CannabisProduct
+
   STRAINS = [ "sativa", "indica", "hybrid" ].freeze
 
   belongs_to :brand
@@ -28,6 +30,7 @@ class Flower < ApplicationRecord
     attachable.variant :small_thumb, resize_to_fill: [ 50, 50 ]
     attachable.variant :thumb, resize_to_fill: [ 100, 100 ]
   end
+
   has_many_attached :images do |attachable|
     attachable.variant :thumb, resize_to_fill: [ 250, 250 ]
     attachable.variant :medium, resize_to_fill: [ 800, 800 ]

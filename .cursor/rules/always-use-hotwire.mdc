@@ -1,0 +1,5 @@
+---
+description: In this project, we are in a complete rails ecosystem
+globs: 
+---
+- Always use Hotwire stack: Stimulus and Turbo
