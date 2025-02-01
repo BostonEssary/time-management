@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_12_29_025426) do
+ActiveRecord::Schema[7.2].define(version: 2025_02_01_073859) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -48,6 +48,17 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_29_025426) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "edibles", force: :cascade do |t|
+    t.string "name"
+    t.string "strain"
+    t.integer "mg_per_serving"
+    t.bigint "brand_id", null: false
+    t.string "food_type"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["brand_id"], name: "index_edibles_on_brand_id"
+  end
+
   create_table "flowers", force: :cascade do |t|
     t.bigint "brand_id", null: false
     t.string "name"
@@ -69,6 +80,17 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_29_025426) do
     t.index ["follower_id"], name: "index_follows_on_follower_id"
   end
 
+  create_table "pre_rolls", force: :cascade do |t|
+    t.string "name"
+    t.string "strain"
+    t.string "thc"
+    t.bigint "brand_id", null: false
+    t.boolean "infused"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["brand_id"], name: "index_pre_rolls_on_brand_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -88,7 +110,9 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_29_025426) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "edibles", "brands"
   add_foreign_key "flowers", "brands"
   add_foreign_key "follows", "users", column: "followee_id"
   add_foreign_key "follows", "users", column: "follower_id"
+  add_foreign_key "pre_rolls", "brands"
 end
