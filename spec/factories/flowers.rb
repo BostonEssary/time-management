@@ -21,9 +21,24 @@
 #
 FactoryBot.define do
   factory :flower do
-    Brand { nil }
-    name { "MyString" }
-    thc { 1.5 }
-    strain { "MyString" }
+    name { Faker::Cannabis.strain }
+    strain { Flower::STRAINS.sample }
+    thc { Faker::Number.between(from: 10.0, to: 35.0).round(1) }
+    association :brand
+
+    after(:build) do |flower|
+      # You'll need to have test files in your fixtures directory
+      flower.avatar.attach(
+        io: File.open(Rails.root.join('spec', 'fixtures', 'files', 'test_image.jpg')),
+        filename: 'test_image.jpg',
+        content_type: 'image/jpeg'
+      )
+
+      flower.images.attach(
+        io: File.open(Rails.root.join('spec', 'fixtures', 'files', 'test_image.jpg')),
+        filename: 'test_image.jpg',
+        content_type: 'image/jpeg'
+      )
+    end
   end
 end

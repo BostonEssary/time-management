@@ -37,5 +37,5 @@ class Flower < ApplicationRecord
   end
 
   validates :name, :avatar, :images, presence: true
-  validates :name, uniqueness: { scope: :brand, message: "A product with that name already exists for that brand" }
+  validates :name, uniqueness: { scope: :brand_id, message: "A product with that name already exists for that brand" }
 end
