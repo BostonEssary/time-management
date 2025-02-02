@@ -17,6 +17,7 @@ module CannabisProduct
     end
 
     validates :name, :avatar, :images, presence: true
+    validates :strain, presence: true, inclusion: { in: STRAINS }
     validates :name, uniqueness: { scope: :brand, message: "A product with that name already exists for that brand" }
   end
 end

@@ -21,10 +21,10 @@
 #
 FactoryBot.define do
   factory :pre_roll do
+    association :brand
     name { "MyString" }
     strain { "MyString" }
     thc { "MyString" }
-    brand { nil }
     infused { false }
   end
 end
