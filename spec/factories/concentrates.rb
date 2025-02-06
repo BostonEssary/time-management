@@ -2,14 +2,14 @@
 #
 # Table name: concentrates
 #
-#  id               :bigint           not null, primary key
-#  concentrate_type :string
-#  name             :string
-#  strain           :string
-#  thc              :float
-#  created_at       :datetime         not null
-#  updated_at       :datetime         not null
-#  brand_id         :bigint           not null
+#  id         :bigint           not null, primary key
+#  category   :string
+#  name       :string
+#  strain     :string
+#  thc        :float
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#  brand_id   :bigint           not null
 #
 # Indexes
 #
@@ -20,11 +20,8 @@
 #  fk_rails_...  (brand_id => brands.id)
 #
 FactoryBot.define do
-  factory :concentrate do
-    strain { "MyString" }
-    concentrate_type { "MyString" }
-    brand { nil }
-    name { "MyString" }
+  factory :concentrate, parent: :cannabis_product, class: 'Concentrate' do
+    category { Concentrate::CATEGORIES.sample }
     thc { 1.5 }
   end
 end

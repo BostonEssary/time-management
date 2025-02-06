@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_02_01_182936) do
+ActiveRecord::Schema[7.2].define(version: 2025_02_06_025904) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -50,7 +50,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_02_01_182936) do
 
   create_table "concentrates", force: :cascade do |t|
     t.string "strain"
-    t.string "concentrate_type"
+    t.string "category"
     t.bigint "brand_id", null: false
     t.string "name"
     t.float "thc"
@@ -100,6 +100,15 @@ ActiveRecord::Schema[7.2].define(version: 2025_02_01_182936) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["brand_id"], name: "index_pre_rolls_on_brand_id"
+  end
+
+  create_table "ratings", force: :cascade do |t|
+    t.integer "score"
+    t.string "ratable_type", null: false
+    t.bigint "ratable_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["ratable_type", "ratable_id"], name: "index_ratings_on_ratable"
   end
 
   create_table "users", force: :cascade do |t|

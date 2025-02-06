@@ -2,14 +2,14 @@
 #
 # Table name: concentrates
 #
-#  id               :bigint           not null, primary key
-#  concentrate_type :string
-#  name             :string
-#  strain           :string
-#  thc              :float
-#  created_at       :datetime         not null
-#  updated_at       :datetime         not null
-#  brand_id         :bigint           not null
+#  id         :bigint           not null, primary key
+#  category   :string
+#  name       :string
+#  strain     :string
+#  thc        :float
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#  brand_id   :bigint           not null
 #
 # Indexes
 #
@@ -22,6 +22,19 @@
 class Concentrate < ApplicationRecord
   include CannabisProduct
 
-  validates :concentrate_type, presence: true
+  CATEGORIES = [
+  "Live Resin",
+  "Shatter",
+  "Rosin",
+  "Kief",
+  "Budder",
+  "Crumble",
+  "Applicators",
+  "Sugar",
+  "Sauce",
+  "Isolate",
+  "Badder" ]
+
+  validates :category, presence: true
   validates :thc, presence: true, numericality: { greater_than_or_equal_to: 0, less_than_or_equal_to: 100 }
 end

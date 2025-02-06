@@ -1,4 +1,4 @@
-RSpec.shared_examples "cannabis_product" do |additional_attrs = {}|
+RSpec.shared_examples "cannabis_product" do |additional_attrs: {}|
    let(:valid_attrs) {
         {
           name: 'name',

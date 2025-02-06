@@ -22,20 +22,5 @@
 class Flower < ApplicationRecord
   include CannabisProduct
 
-  STRAINS = [ "sativa", "indica", "hybrid" ].freeze
-
-  belongs_to :brand
-
-  has_one_attached :avatar do |attachable|
-    attachable.variant :small_thumb, resize_to_fill: [ 50, 50 ]
-    attachable.variant :thumb, resize_to_fill: [ 100, 100 ]
-  end
-
-  has_many_attached :images do |attachable|
-    attachable.variant :thumb, resize_to_fill: [ 250, 250 ]
-    attachable.variant :medium, resize_to_fill: [ 800, 800 ]
-  end
-
-  validates :name, :avatar, :images, presence: true
-  validates :name, uniqueness: { scope: :brand_id, message: "A product with that name already exists for that brand" }
+  validates :thc, presence: true, numericality: { greater_than_or_equal_to: 0, less_than_or_equal_to: 100 }
 end
