@@ -1,0 +1,17 @@
+<div class="bg-white rounded-lg shadow-lg overflow-hidden">
+  <%= link_to edible_path(edible) do %>
+    <div class="relative">
+      <% if edible.avatar.attached? %>
+        <%= image_tag edible.avatar, class: "w-full h-48 object-cover" %>
+      <% else %>
+        <div class="w-full h-48 bg-gray-200 flex items-center justify-center">
+          <span class="text-gray-500">No image</span>
+        </div>
+      <% end %>
+    </div>
+    <div class="p-4">
+      <h3 class="text-lg font-semibold"><%= edible.name %></h3>
+      <p class="text-gray-600">Brand: <%= edible.brand&.name %></p>
+    </div>
+  <% end %>
+</div> 

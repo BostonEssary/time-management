@@ -23,6 +23,9 @@ Rails.application.routes.draw do
   resources :users, only: [ :show, :edit, :update ]
   resource :profile, only: [ :show, :edit, :update ]
   resources :flowers
+  resources :concentrates
+  resources :edibles
+  resources :pre_rolls
   resources :brands, concerns: :searchable
 
   namespace :api do
