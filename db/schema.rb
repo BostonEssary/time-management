@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_02_06_025904) do
+ActiveRecord::Schema[7.2].define(version: 2025_02_06_040359) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -70,6 +70,14 @@ ActiveRecord::Schema[7.2].define(version: 2025_02_06_025904) do
     t.index ["brand_id"], name: "index_edibles_on_brand_id"
   end
 
+  create_table "effects", force: :cascade do |t|
+    t.text "description"
+    t.string "name", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_effects_on_name", unique: true
+  end
+
   create_table "flowers", force: :cascade do |t|
     t.bigint "brand_id", null: false
     t.string "name"
@@ -100,6 +108,17 @@ ActiveRecord::Schema[7.2].define(version: 2025_02_06_025904) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["brand_id"], name: "index_pre_rolls_on_brand_id"
+  end
+
+  create_table "product_effects", force: :cascade do |t|
+    t.bigint "effect_id", null: false
+    t.string "effectable_type", null: false
+    t.bigint "effectable_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["effect_id", "effectable_type", "effectable_id"], name: "index_product_effects_uniqueness", unique: true
+    t.index ["effect_id"], name: "index_product_effects_on_effect_id"
+    t.index ["effectable_type", "effectable_id"], name: "index_product_effects_on_effectable"
   end
 
   create_table "ratings", force: :cascade do |t|
@@ -136,4 +155,5 @@ ActiveRecord::Schema[7.2].define(version: 2025_02_06_025904) do
   add_foreign_key "follows", "users", column: "followee_id"
   add_foreign_key "follows", "users", column: "follower_id"
   add_foreign_key "pre_rolls", "brands"
+  add_foreign_key "product_effects", "effects"
 end
