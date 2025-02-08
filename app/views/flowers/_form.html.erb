@@ -49,7 +49,7 @@
       placeholder='Who makes the product?'
     />
     <%= form.hidden_field :brand_id, data: { autocomplete_target: "hidden" } %>
-    <ul class="list-group" data-autocomplete-target="results"></ul>
+    <ul class="list-group relative" data-autocomplete-target="results"></ul>
   </div>
 
   <%= form.submit "Save changes", class: "bg-primary text-primary-50 rounded p-2" %>

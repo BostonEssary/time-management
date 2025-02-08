@@ -7,6 +7,29 @@ module.exports = {
     './app/javascript/**/*.js',
     './app/views/**/*.{erb,haml,html,slim}'
   ],
+  safelist: [
+    // Effect theme classes
+    'bg-sky-200',
+    'bg-yellow-200',
+    'bg-orange-200',
+    'bg-pink-200',
+    'bg-purple-200',
+    'bg-green-200',
+    'bg-fuchsia-200',
+    'bg-red-200',
+    'bg-amber-200',
+    'bg-blue-200',
+    'text-sky-700',
+    'text-yellow-700',
+    'text-orange-700',
+    'text-pink-700',
+    'text-purple-700',
+    'text-green-700',
+    'text-fuchsia-700',
+    'text-red-700',
+    'text-amber-700',
+    'text-blue-700'
+  ],
   theme: {
     extend: {
       fontFamily: {

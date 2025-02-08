@@ -1,7 +1,11 @@
-<% results.each do |result| %>
-  <li
-    class="list-group-item bg-white active:bg-blue-500"
+<div class="absolute z-10 w-full">
+  <% results.each do |result| %>
+  <div class='cursor-pointer'>
+    <li
+    class="bg-white active:bg-red-500 !cursor-pointer py-2"
     role="option"
     data-autocomplete-value="<%= result.id %>"
   ><%= result.name %></li>
+  </div>
 <% end %>
+</div>

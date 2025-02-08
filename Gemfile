@@ -59,6 +59,7 @@ group :development do
   gem "erb_lint"
   gem "htmlbeautifier"
   gem "solargraph-rails"
+  gem "erb-formatter"
 end
 
 group :test do
