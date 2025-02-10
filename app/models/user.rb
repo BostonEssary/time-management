@@ -29,11 +29,18 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
+  has_one_attached :avatar do |attachable|
+    attachable.variant :small_thumb, resize_to_fill: [ 50, 50 ]
+    attachable.variant :thumb, resize_to_fill: [ 100, 100 ]
+  end
+
   has_many :follower_relationships, class_name: "Follow", foreign_key: "followee_id"
   has_many :followers, through: :follower_relationships, source: :follower
 
   has_many :followee_relationships, class_name: "Follow", foreign_key: "follower_id"
   has_many :followees, through: :followee_relationships, source: :followee
+
+  has_many :ratings, dependent: :destroy
 
   validates_uniqueness_of :username
   validates :username, presence: true

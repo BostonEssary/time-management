@@ -1,0 +1,9 @@
+<%# locals: (score:, text_size: "text-3xl" ) %>
+<div class='flex gap-2 items-center'>
+  <% score.to_i.times do %>
+    <i class="fa-solid fa-cannabis <%= text_size %>"></i>
+  <% end %>
+  <% (5 - score.to_i).times do %>
+    <i class="fa-regular fa-circle <%= text_size %>"></i>
+  <% end %>
+</div>

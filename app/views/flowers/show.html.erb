@@ -1,25 +1,67 @@
 <div class='flex gap-2 m-4 p-2 bg-primary-50 rounded-md'>
-  <div>
-    <%= image_tag @flower.avatar.variant(:medium) %>
-  </div>
   <div class='flex flex-col gap-2'>
-    <h1 class='text-2xl font-bold'><%= @flower.name %></h1>
-    <p><%= link_to @flower.brand.name, brand_path(@flower.brand) %></p>
-    <%= render layout: 'shared/popover' do %>
-      <div class='flex gap-2 items-center cursor-pointer bg-primary text-white rounded-md p-1'>
-        <i class="fa-solid fa-dna"></i>
-        <p><%= @flower.strain.capitalize %></p>
-      </div>
-      <% content_for :content do %>
-        <p><%= @flower.strain_effects %></p>
-      <% end %>
+    <%= image_tag @flower.avatar.variant(:large) %>
+    <% if @flower.ratings.any? %>
+      <%= render 'shared/rating', score: @flower.ratings.average(:score) %>
     <% end %>
+    <div class='flex flex-col gap-3'>
+      <% @flower.ratings.each do |rating| %>
+        <div class='flex flex-col gap-2'>
+          <div class='flex gap-2'>
+            <div class='flex flex-col gap-1 items-center'>
+              <%= image_tag rating.user.avatar.variant(:small_thumb), class: 'rounded-full' %>
+              <p><%= rating.user.username %></p>
+            </div>
+            <div class='flex flex-col bg-primary-100 rounded-md p-2'>
+              <%= render 'shared/rating', score: rating.score, text_size: "text-sm" %>
+              <p class='text-sm text-gray-500'><%= rating.created_at.strftime("%B %d, %Y") %></p>
+              <p><%= rating.comment %></p>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+  <div class='flex flex-col gap-8'>
+    <div class='flex flex-col gap-2 m'>
+      <h1 class='text-2xl font-bold'><%= @flower.name %></h1>
+      <%= link_to @flower.brand.name, brand_path(@flower.brand), class: 'font-light' %>
+      <div class='flex gap-2'>
+        <%= render layout: 'shared/popover' do %>
+          <div class='flex gap-2 items-center cursor-pointer bg-primary text-white text-sm rounded-full p-2'>
+            <p><%= @flower.strain.capitalize %></p>
+          </div>
+          <% content_for :content do %>
+            <p><%= @flower.strain_effects %></p>
+          <% end %>
+        <% end %>
+        <div class='flex gap-1 text-sm text-white bg-primary rounded-full p-2 w-fit'>
+          <p><%= @flower.thc %>%</p>
+          <p>THC</p>
+        </div>
+      </div>
+    </div>
     <div class='flex gap-2'>
       <% @flower.effects.each do |effect| %>
         <%= effect_pill(effect.name) %>
       <% end %>
     </div>
-    <p>THC: <%= @flower.thc %>%</p>
+    <div class='flex flex-col gap-2 bg-primary-100 rounded-md p-2'>
+      <p class='font-bold'>Latest Review</p>
+      <% if @flower.latest_review %>
+        <div class='flex flex-col gap-2'>
+          <div class='flex gap-2 items-center'>
+            <%= image_tag @flower.latest_review.user.avatar.variant(:small_thumb), class: 'rounded-full' %>
+            <div class='flex flex-col'>
+              <p class='font-bold text-lg'><%= @flower.latest_review.user.username %></p>
+              <p class='text-sm text-gray-500'><%= @flower.latest_review.created_at.strftime("%B %d, %Y") %></p>
+            </div>
+          </div>
+          <p><%= @flower.latest_review.comment %></p>
+        </div>
+      <% else %>
+        <p>No reviews yet</p>
+      <% end %>
+    </div>
   </div>
 </div>
-

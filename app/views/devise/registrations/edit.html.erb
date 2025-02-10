@@ -8,6 +8,17 @@
     <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
   </div>
 
+  <div class="field">
+    <%= f.label :avatar %><br />
+    <%= f.file_field :avatar, accept: 'image/*', direct_upload: true %>
+    <% if resource.avatar.attached? %>
+      <div class="mt-2">
+        <p>Current avatar:</p>
+        <%= image_tag resource.avatar, class: "w-20 h-20 rounded-full object-cover" %>
+      </div>
+    <% end %>
+  </div>
+
   <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
     <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
   <% end %>

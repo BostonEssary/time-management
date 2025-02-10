@@ -17,7 +17,7 @@ User.delete_all
 puts "Creating users..."
 users = []
 10.times do |i|
-  users << User.create!(
+  user = User.new(
     username: Faker::Internet.unique.username,
     email: Faker::Internet.unique.email,
     password: 'password123',  # Simple password for development
@@ -25,6 +25,16 @@ users = []
     experience_level: User::EXPERIENCE_LEVELS.sample,
     consumption_preferences: User::CONSUMPTION_METHODS.sample(rand(1..3))
   )
+  
+  # Attach doom image as avatar
+  user.avatar.attach(
+    io: File.open(Rails.root.join('spec', 'fixtures', 'files', 'doom.jpg')),
+    filename: 'doom.jpg',
+    content_type: 'image/jpeg'
+  )
+  
+  user.save!
+  users << user
 end
 
 puts "Creating brands..."
@@ -204,11 +214,48 @@ end
 puts "Creating ratings..."
 # Create some ratings for each product type
 all_products = flowers + concentrates + pre_rolls + edibles
+
+# Define comment templates based on score and product type
+def generate_comment(product, score)
+  positive_adjectives = ["amazing", "excellent", "fantastic", "great", "wonderful"]
+  neutral_adjectives = ["decent", "okay", "good", "fine", "satisfactory"]
+  
+  case product
+  when Flower
+    if score >= 4
+      "#{positive_adjectives.sample} flower! The #{product.strain} effects were exactly what I was looking for. #{product.thc}% THC was perfect."
+    else
+      "#{neutral_adjectives.sample} strain. The effects were mild, but it did the job."
+    end
+  when Concentrate
+    if score >= 4
+      "This #{product.category} is #{positive_adjectives.sample}! Super clean and potent at #{product.thc}% THC."
+    else
+      "#{neutral_adjectives.sample} concentrate. Expected more flavor from this #{product.category}."
+    end
+  when PreRoll
+    if score >= 4
+      "#{positive_adjectives.sample} pre-roll! #{product.infused ? 'Love that it\'s infused!' : 'Burns nice and smooth.'} Will buy again."
+    else
+      "#{neutral_adjectives.sample} for a quick smoke. #{product.infused ? 'The infusion was subtle.' : 'Burns a bit fast.'}"
+    end
+  when Edible
+    if score >= 4
+      "#{positive_adjectives.sample} #{product.food_type.downcase}! #{product.mg_per_serving}mg per serving is perfect for me."
+    else
+      "#{neutral_adjectives.sample} edible. The #{product.food_type.downcase} taste could be better."
+    end
+  end
+end
+
 all_products.each do |product|
   rand(3..8).times do
+    score = rand(3..5)
     Rating.create!(
       ratable: product,
-      score: rand(60..100)  # Assuming ratings from 60-100 for a positive skew
+      score: score,
+      comment: generate_comment(product, score),
+      user: users.sample  # Randomly assign a user from our created users
     )
   end
 end

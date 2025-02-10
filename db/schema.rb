@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_02_06_040359) do
+ActiveRecord::Schema[7.2].define(version: 2025_02_09_035425) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -127,7 +127,10 @@ ActiveRecord::Schema[7.2].define(version: 2025_02_06_040359) do
     t.bigint "ratable_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.text "comment"
+    t.bigint "user_id"
     t.index ["ratable_type", "ratable_id"], name: "index_ratings_on_ratable"
+    t.index ["user_id"], name: "index_ratings_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -156,4 +159,5 @@ ActiveRecord::Schema[7.2].define(version: 2025_02_06_040359) do
   add_foreign_key "follows", "users", column: "follower_id"
   add_foreign_key "pre_rolls", "brands"
   add_foreign_key "product_effects", "effects"
+  add_foreign_key "ratings", "users"
 end

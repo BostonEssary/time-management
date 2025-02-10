@@ -52,15 +52,18 @@ module ApplicationHelper
   def effect_text(effect)
     theme = EFFECT_THEMES[effect]
     font_color = "text-#{theme}-700"
-    font_classes = "text-sm #{font_color}"
+    font_classes = "#{font_color}"
     effect_icon(effect, font_classes) + " " + content_tag(:span, effect.capitalize, class: font_classes)
   end
 
   def effect_pill(effect)
     p "effect", effect
     theme = EFFECT_THEMES[effect]
-    content_tag(:div, class: "bg-#{theme}-200 rounded-md p-1 w-fit") do
+    content_tag(:div, class: "bg-#{theme}-200 rounded-full p-2 w-fit") do
       effect_text(effect)
     end
+  end
+
+  def strain_effects(strain)
   end
 end

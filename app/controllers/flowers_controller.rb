@@ -8,7 +8,7 @@ class FlowersController < ApplicationController
   def create
     @flower = Flower.new(flower_params)
     if @flower.save
-      redirect_to flower_path(@flower), notice: 'Flower created'
+      redirect_to flower_path(@flower), notice: "Flower created"
     else
       render :new, status: :unprocessable_entity
     end
