@@ -1,31 +1,17 @@
-<div class='flex gap-2 m-4 p-2 bg-primary-50 rounded-md'>
-  <div class='flex flex-col gap-2'>
-    <%= image_tag @flower.avatar.variant(:large) %>
+<div class='flex flex-col gap-12 p-2 bg-primary-50 rounded-md'>
+  <div class='flex flex-col md:flex-row gap-6 flex-1'>
+    <div class='flex flex-col gap-4'>
+      <%= image_tag @flower.avatar.variant(:large) %>
     <% if @flower.ratings.any? %>
       <%= render 'shared/rating', score: @flower.ratings.average(:score) %>
     <% end %>
-    <div class='flex flex-col gap-3'>
-      <% @flower.ratings.each do |rating| %>
-        <div class='flex flex-col gap-2'>
-          <div class='flex gap-2'>
-            <div class='flex flex-col gap-1 items-center'>
-              <%= image_tag rating.user.avatar.variant(:small_thumb), class: 'rounded-full' %>
-              <p><%= rating.user.username %></p>
-            </div>
-            <div class='flex flex-col bg-primary-100 rounded-md p-2'>
-              <%= render 'shared/rating', score: rating.score, text_size: "text-sm" %>
-              <p class='text-sm text-gray-500'><%= rating.created_at.strftime("%B %d, %Y") %></p>
-              <p><%= rating.comment %></p>
-            </div>
-          </div>
-        </div>
-      <% end %>
     </div>
-  </div>
-  <div class='flex flex-col gap-8'>
-    <div class='flex flex-col gap-2 m'>
-      <h1 class='text-2xl font-bold'><%= @flower.name %></h1>
+    <div class='flex flex-col gap-4'>
+      <div class='flex flex-col gap-4 '>
+      <div>
+        <h1 class='text-3xl font-bold'><%= @flower.name %></h1>
       <%= link_to @flower.brand.name, brand_path(@flower.brand), class: 'font-light' %>
+      </div>
       <div class='flex gap-2'>
         <%= render layout: 'shared/popover' do %>
           <div class='flex gap-2 items-center cursor-pointer bg-primary text-white text-sm rounded-full p-2'>
@@ -46,22 +32,16 @@
         <%= effect_pill(effect.name) %>
       <% end %>
     </div>
-    <div class='flex flex-col gap-2 bg-primary-100 rounded-md p-2'>
+    <div class='flex flex-col gap-2'>
       <p class='font-bold'>Latest Review</p>
-      <% if @flower.latest_review %>
-        <div class='flex flex-col gap-2'>
-          <div class='flex gap-2 items-center'>
-            <%= image_tag @flower.latest_review.user.avatar.variant(:small_thumb), class: 'rounded-full' %>
-            <div class='flex flex-col'>
-              <p class='font-bold text-lg'><%= @flower.latest_review.user.username %></p>
-              <p class='text-sm text-gray-500'><%= @flower.latest_review.created_at.strftime("%B %d, %Y") %></p>
-            </div>
-          </div>
-          <p><%= @flower.latest_review.comment %></p>
-        </div>
-      <% else %>
-        <p>No reviews yet</p>
-      <% end %>
+      <%= render 'ratings/rating_card', rating: @flower.latest_review %>
+    </div>
     </div>
   </div>
+  <div class='flex flex-col flex-1 gap-8'>
+  </div><div class='flex flex-col gap-4'>
+      <%= render partial: 'ratings/rating_card', collection: @flower.ratings, as: :rating %>
+    </div>
 </div>
+
+
