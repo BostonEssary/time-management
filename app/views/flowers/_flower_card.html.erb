@@ -1,20 +1,22 @@
-<%= link_to flower_path(flower) do %>
-  <div class='flex flex-col gap-2 bg-primary-50 w-72 p-4 rounded'>
+<div class='flex flex-col gap-2 bg-primary-50 w-72 p-4 rounded'>
+  <div>
+    <%= image_tag flower.images.sample.variant(:thumb) %>
     <div class='flex items-center gap-2'>
-      <%= image_tag flower.avatar.variant(:small_thumb), class: "rounded-full" %>
-      <h2><%= flower.name %></h2>
+      <h2 class='text-lg font-bold'><%= flower.name %></h2>
+      <div class='flex text-xs text-white bg-primary rounded-full p-3 w-4 h-4 items-center justify-center'>
+        <p><%= flower.strain.capitalize.first %></p>
+      </div>
     </div>
-    <div>
-      <swiper-container navigation="true" pagination="true" scrollbar="true">
-        <% flower.images.each do | image | %>
-          <swiper-slide>
-            <div class="grid place-items-center">
-              <%= image_tag image.variant(:thumb) %>
-            </div>
-          </swiper-slide>
-          <%=  %>
-        <% end %>
-      </swiper-container>
+    <div class='flex gap-4 mt-2'>
+      <% if flower.ratings.any? %>
+        <div class='flex gap-2 items-center'>
+          <div class='text-xs'>
+            <%= render 'shared/rating', score: flower.ratings.average(:score), text_size: 'text-xs' %>
+            <p><%= flower.ratings.count %> reviews</p>
+          </div>
+        </div>
+      <% end %>
+      <%= link_to "Check it out!", flower_path(flower), class: 'text-sm hover:underline bg-secondary text-white rounded-full p-2' %>
     </div>
   </div>
-<% end %>
+</div>
