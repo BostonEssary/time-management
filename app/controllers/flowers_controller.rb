@@ -1,4 +1,5 @@
 class FlowersController < ApplicationController
+  layout "product", only: [ :show ]
   before_action :set_flower, only: [ :show ]
 
   def index

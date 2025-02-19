@@ -1,0 +1,6 @@
+<%= turbo_frame_tag 'new_rating' do %>
+    <%= form_with model: @rating, class: 'flex flex-col gap-4 p-4', data: { controller: 'scroll-to' } do |form| %>
+        <%= form.text_area :comment, placeholder: 'Comment' %>
+        <%= form.submit 'Submit' %>
+    <% end %>
+<% end %>

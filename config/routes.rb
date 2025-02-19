@@ -28,7 +28,7 @@ Rails.application.routes.draw do
   resources :edibles
   resources :pre_rolls
   resources :brands, concerns: :searchable
-
+  resources :ratings, only: [ :new, :create ]
   namespace :api do
     resources :brands, only: [ :index ]
   end

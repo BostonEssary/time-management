@@ -1,18 +1,17 @@
 <%# locals: (rating: ) %>
-
-<div class='w-full'>
-  <div class='flex gap-2'>
-    <div class='flex flex-col bg-primary-100 rounded-md p-2 gap-2'>
-      <div class='flex gap-1 items-center'>
-        <%= image_tag rating.user.avatar.variant(:small_thumb), class: 'rounded-full' %>
-        <div class='flex flex-col'>
-          <p><%= rating.user.username %></p>
-          <p class='text-sm text-gray-500'><%= rating.user.ratings.count %> reviews</p>
-        </div>
-      </div>
-      <%= render 'shared/rating', score: rating.score, text_size: "text-sm" %>
-      <p class='text-sm text-gray-500'><%= rating.created_at.strftime("%B %d, %Y") %></p>
-      <p><%= rating.comment %></p>
+<div class='flex flex-col gap-3 bg-primary-100 p-4 rounded-lg'>
+  <div class='flex items-center gap-2'>
+    <%= image_tag rating.user.avatar.variant(:small_thumb), class: 'rounded-full' %>
+    <div class='flex flex-col'>
+      <p><%= rating.user.username %></p>
+      <p class='text-sm text-gray-500'><%= rating.user.ratings.count %> reviews</p>
     </div>
+  </div>
+  <div class='flex flex-col'>
+    <%= render 'shared/rating', score: rating.score, text_size: "text-sm" %>
+  </div>
+  <div class='flex flex-col'>
+    <p><%= rating.comment %></p>
+    <p class='text-sm text-gray-500'><%= rating.created_at.strftime("%B %d, %Y") %></p>
   </div>
 </div>
