@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get "ratings/create"
   devise_for :users
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
@@ -14,8 +15,21 @@ Rails.application.routes.draw do
   # root "posts#index"
   root "dashboard#index"
 
+  concern :searchable do
+    get :search, on: :collection
+  end
+
   resources :dashboard
   resources :follows, only: [ :create, :destroy ]
   resources :users, only: [ :show, :edit, :update ]
   resource :profile, only: [ :show, :edit, :update ]
+  resources :flowers
+  resources :concentrates
+  resources :edibles
+  resources :pre_rolls
+  resources :brands, concerns: :searchable
+  resources :ratings, only: [ :new, :create ]
+  namespace :api do
+    resources :brands, only: [ :index ]
+  end
 end

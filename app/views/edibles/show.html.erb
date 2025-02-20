@@ -1,0 +1,19 @@
+<div class="container mx-auto px-4 py-8">
+  <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+    <div class="md:flex">
+      <div class="md:w-1/2">
+        <% if @edible.avatar.attached? %>
+          <%= image_tag @edible.avatar, class: "w-full h-96 object-cover" %>
+        <% end %>
+      </div>
+      <div class="p-8 md:w-1/2">
+        <h1 class="text-3xl font-bold mb-4"><%= @edible.name %></h1>
+        <div class="space-y-4">
+          <p class="text-gray-600">THC: <%= @edible.thc %>%</p>
+          <p class="text-gray-600">Category: <%= @edible.category %></p>
+          <p class="text-gray-600">Brand: <%= @edible.brand&.name %></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> 

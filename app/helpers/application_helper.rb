@@ -1,4 +1,31 @@
 module ApplicationHelper
+  EFFECT_THEMES = {
+    "Relaxed"   => "sky",
+    "Euphoric"  => "yellow",
+    "Happy"     => "orange",
+    "Uplifted"  => "pink",
+    "Sleepy"    => "purple",
+    "Focused"   => "green",
+    "Creative"  => "fuchsia",
+    "Energetic" => "red",
+    "Hungry"    => "amber",
+    "Talkative" => "blue"
+  }.freeze
+
+  EFFECT_ICONS = {
+    "Energetic" => "fa-solid fa-bolt",
+    "Relaxed" => "fa-solid fa-couch",
+    "Sleepy" => "fa-solid fa-bed",
+    "Focused" => "fa-solid fa-magnifying-glass",
+    "Creative" => "fa-solid fa-brain",
+    "Hungry" => "fa-solid fa-bowl-food",
+    "Talkative" => "fa-solid fa-comments",
+    "Happy" => "fa-solid fa-smile",
+    "Euphoric" => "fa-solid fa-face-smile",
+    "Uplifted" => "fa-solid fa-face-smile"
+  }.freeze
+
+
   def flash_symbol(type)
     if type.to_s == "notice"
       symbol = '<i class="fa-solid fa-check"></i>'
@@ -14,5 +41,29 @@ module ApplicationHelper
     else
       "bg-yellow-100 border-2 border-yellow-400 text-yellow-800"
     end
+  end
+
+  def effect_icon(effect, font_classes)
+    p "effect for icon", effect
+    icon = EFFECT_ICONS[effect]
+    content_tag(:i, nil, class: icon + " #{font_classes}")
+  end
+
+  def effect_text(effect)
+    theme = EFFECT_THEMES[effect]
+    font_color = "text-#{theme}-700"
+    font_classes = "#{font_color}"
+    effect_icon(effect, font_classes) + " " + content_tag(:span, effect.capitalize, class: font_classes)
+  end
+
+  def effect_pill(effect)
+    p "effect", effect
+    theme = EFFECT_THEMES[effect]
+    content_tag(:div, class: "bg-#{theme}-200 rounded-full p-2 w-fit") do
+      effect_text(effect)
+    end
+  end
+
+  def strain_effects(strain)
   end
 end

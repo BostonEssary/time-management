@@ -1,0 +1,23 @@
+{
+  "ERB Tags": {
+    "prefix": "er",
+    "body": [
+      "<%= $1 %>"
+    ],
+    "description": "Insert ERB output tags"
+  },
+  "ERB Tags (No Output)": {
+    "prefix": "pe",
+    "body": [
+      "<% $1 %>"
+    ],
+    "description": "Insert ERB execution tags (no output)"
+  },
+  "ERB Comment": {
+    "prefix": "ec",
+    "body": [
+      "<%# $1 %>"
+    ],
+    "description": "Insert ERB comment"
+  }
+} 

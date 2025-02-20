@@ -1,0 +1,26 @@
+---
+EnableDefaultLinters: true
+linters:
+  ErbSafety:
+    enabled: true
+  Rubocop:
+    enabled: true
+    rubocop_config:
+      inherit_from:
+        - .rubocop.yml
+  SpaceAroundErbTag:
+    enabled: true
+  HardCodedString:
+    enabled: false
+  ClosingErbTagIndent:
+    enabled: true
+  ExtraNewline:
+    enabled: true
+  FinalNewline:
+    enabled: true
+  NoJavascriptTagHelper:
+    enabled: true
+  SelfClosingTag:
+    enabled: true
+  SpaceInHtmlTag:
+    enabled: true 

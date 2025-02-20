@@ -1,0 +1,56 @@
+<%= form_with model: flower, class: 'flex flex-col gap-4' do |form| %>
+  <%= render "shared/form_errors", resource: flower %>
+
+  <div class='flex flex-col gap-2'>
+    <%= form.label :name %>
+    <%= form.text_field :name,
+                    class: "border-gray-300 border-2 rounded",
+                    placeholder: "Enter the product name" %>
+  </div>
+
+  <div class='flex flex-col gap-2'>
+    <%= form.label :thc, "THC" %>
+    <%= form.number_field :thc,
+                      class: "border-gray-300 border-2 rounded",
+                      placeholder: "Enter the THC percentage" %>
+  </div>
+
+  <div class='flex flex-col gap-2'>
+    <%= form.label :strain %>
+    <%= form.collection_select :strain,
+                           Flower::STRAINS,
+                           :to_s,
+                           :titleize,
+                           { include_blank: "What is the strain of the flower?" },
+                           class: "border-gray-300 border-2 rounded" %>
+  </div>
+
+  <div class="flex flex-col gap-2">
+    <%= form.label :avatar %>
+    <%= form.file_field :avatar %>
+  </div>
+
+  <div class='flex flex-col gap-2'>
+    <%= form.label :images %>
+    <%= form.file_field :images, multiple: true %>
+  </div>
+
+  <div
+    data-controller="autocomplete"
+    data-autocomplete-url-value="/brands/search"
+    role="combobox"
+    class="flex flex-col gap-2"
+  >
+    <%= form.label "Brand" %>
+    <input
+      class="border-gray-300 border-2 rounded"
+      type="text"
+      data-autocomplete-target="input"
+      placeholder='Who makes the product?'
+    />
+    <%= form.hidden_field :brand_id, data: { autocomplete_target: "hidden" } %>
+    <ul class="list-group relative" data-autocomplete-target="results"></ul>
+  </div>
+
+  <%= form.submit "Save changes", class: "bg-primary text-primary-50 rounded p-2" %>
+<% end %>

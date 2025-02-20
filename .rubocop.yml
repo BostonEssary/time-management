@@ -28,6 +28,7 @@ Style/FrozenStringLiteralComment:
 Metrics/BlockLength:
   Exclude:
     - 'app/views/**/*'
+    - 'spec/**/*'
 
 Layout/InitialIndentation:
   Enabled: true
