@@ -1,5 +1,5 @@
-<div class='flex flex-col gap-2 bg-primary-50 w-72 p-4 rounded'>
-  <div>
+<div class='flex flex-col gap-4 bg-white border border-primary-100 shadow-sm w-72 p-4 rounded-lg hover:shadow-md transition-shadow'>
+  <div class='flex flex-col gap-2'>
     <%= image_tag flower.images.sample.variant(:thumb) %>
     <div class='flex items-center gap-2'>
       <h2 class='text-lg font-bold'><%= flower.name %></h2>
@@ -7,16 +7,41 @@
         <p><%= flower.strain.capitalize.first %></p>
       </div>
     </div>
-    <div class='flex gap-4 mt-2'>
-      <% if flower.ratings.any? %>
-        <div class='flex gap-2 items-center'>
-          <div class='text-xs'>
-            <%= render 'shared/rating', score: flower.ratings.average(:score), text_size: 'text-xs' %>
-            <p><%= flower.ratings.count %> reviews</p>
+    <div class='flex'>
+      <% if flower.ratings_count.to_i > 0 && (last_review = @last_reviews[flower.id]) %>
+        <div data-controller="popover" data-popover-position-value="top" class="w-fit relative">
+          <div data-action="mouseenter->popover#show mouseleave->popover#hide touchstart->popover#toggle">
+            <div class='flex gap-2 items-center cursor-pointer group bg-primary-50 rounded-lg px-3 py-2 transition-colors hover:bg-primary-100'>
+              <div class='text-xs'>
+                <%= render 'shared/rating', score: flower.average_score, text_size: 'text-xs' %>
+                <div class="flex items-center gap-1">
+                  <p><%= flower.ratings_count %> reviews</p>
+                  <i class="fa-solid fa-circle-info text-primary-400 group-hover:text-primary transition-colors" title="Click or hover to see the latest review"></i>
+                </div>
+              </div>
+            </div>
           </div>
+          <template data-popover-target="content">
+            <div data-popover-target="card" class="absolute z-10 w-72 bottom-full mb-2 bg-white rounded-md p-2 shadow-lg">
+              <div class="p-3">
+                <h3 class="text-lg font-semibold text-primary mb-3">Latest Review</h3>
+                <div class="flex items-center gap-3 mb-2">
+                  <%= image_tag last_review.user.avatar.variant(:thumb), class: "w-8 h-8 rounded-full" if last_review.user.avatar.attached? %>
+                  <div>
+                    <p class="font-medium"><%= last_review.user.username %></p>
+                    <%= render 'shared/rating', score: last_review.score, text_size: 'text-xs' %>
+                  </div>
+                </div>
+                <p class="text-sm text-gray-600"><%= truncate(last_review.comment, length: 100) %></p>
+              </div>
+            </div>
+          </template>
         </div>
       <% end %>
-      <%= link_to "Check it out!", flower_path(flower), class: 'text-sm hover:underline bg-secondary text-white rounded-full p-2' %>
     </div>
   </div>
+  <%= link_to flower_path(flower), class: 'w-full text-center bg-secondary text-white py-2 rounded-lg hover:bg-secondary-600 transition-colors' do %>
+    View Details
+    <i class="fa-solid fa-arrow-right ml-1"></i>
+  <% end %>
 </div>

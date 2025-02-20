@@ -76,3 +76,5 @@ gem "aws-sdk-s3", "~> 1.176"
 gem "requestjs-rails", "~> 0.0.12"
 
 gem "annotate", "~> 3.2", group: :development
+
+gem "kaminari", "~> 1.2"

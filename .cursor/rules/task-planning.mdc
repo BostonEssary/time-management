@@ -1,0 +1,34 @@
+---
+description: task planning
+globs: 
+---
+ When receiving Acceptance Criteria (AC) for a task, follow these steps for planning and execution:
+
+1. Initial Analysis:
+   - Break down the AC into distinct requirements
+   - Identify any dependencies between requirements
+   - Note any potential technical challenges or unknowns
+
+2. Implementation Planning:
+   - Determine the order of implementation based on dependencies
+   - Identify which parts of the codebase will need to be modified
+   - List any new files, models, or migrations needed
+   - Consider test coverage requirements
+
+3. Technical Approach:
+   - Outline the specific changes needed for each requirement
+   - Consider database schema changes if needed
+   - Plan UI/UX changes if applicable
+   - Identify potential performance implications
+
+4. Risk Assessment:
+   - List potential edge cases
+   - Note areas that might need extra testing
+   - Identify possible impacts on existing features
+
+5. Execution Strategy:
+   - Break down the work into smaller, manageable commits
+   - Plan the testing approach (unit tests, integration tests)
+   - Consider if any documentation updates will be needed
+
+This structured approach ensures thorough understanding and efficient implementation of tasks while maintaining code quality and project standards.

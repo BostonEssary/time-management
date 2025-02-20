@@ -1,15 +1,16 @@
-<%# A flexible popover component that accepts two blocks:
+<%# A flexible popover component that accepts:
   - The default block for the trigger content
-  - The :content block for the popover content
+  - content: The content to show in the popover
 %>
 
+<% content ||= yield(:content) %>
 <div data-controller="popover" data-popover-position-value="bottom" class="w-fit relative">
   <div data-action="mouseenter->popover#show mouseleave->popover#hide touchstart->popover#toggle">
     <%= yield %>
   </div>
   <template data-popover-target="content">
     <div data-popover-target="card" class="absolute z-10 w-96 max-w-[90vw] top-full bg-white rounded-md p-2 shadow-lg">
-      <%= yield :content %>
+      <%= content %>
     </div>
   </template>
 </div> 
