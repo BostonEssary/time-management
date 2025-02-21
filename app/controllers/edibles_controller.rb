@@ -1,8 +1,23 @@
 class EdiblesController < ApplicationController
+  layout "product", only: [ :show ]
   before_action :set_edible, only: [ :show ]
 
   def index
-    @edibles = Edible.all
+    @edibles = Edible.includes(ratings: :user)
+                    .select("edibles.*, COUNT(ratings.id) as ratings_count, AVG(ratings.score) as average_score")
+                    .left_joins(:ratings)
+                    .group("edibles.id")
+                    .page(params[:page])
+                    .per(6)
+
+    # Get the last review for each edible
+    last_reviews = Rating.select("DISTINCT ON (ratable_id) *")
+                        .where(ratable_type: "Edible", ratable_id: @edibles.map(&:id))
+                        .order("ratable_id, created_at DESC")
+                        .includes(:user)
+
+    # Create a hash of edible_id => last_review
+    @last_reviews = last_reviews.index_by(&:ratable_id)
   end
 
   def create
@@ -33,7 +48,7 @@ class EdiblesController < ApplicationController
   private
 
   def edible_params
-    params.require(:edible).permit(:name, :thc, :brand_id, :category, :avatar, images: [])
+    params.require(:edible).permit(:name, :strain, :mg_per_serving, :food_type, :brand_id, :avatar, images: [])
   end
 
   def set_edible

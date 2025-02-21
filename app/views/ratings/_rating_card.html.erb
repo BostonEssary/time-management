@@ -3,7 +3,7 @@
   <div class='flex items-center gap-2'>
     <%= image_tag rating.user.avatar.variant(:small_thumb), class: 'rounded-full' %>
     <div class='flex flex-col'>
-      <p><%= rating.user.username %></p>
+      <%= link_to rating.user.username, user_path(rating.user), class: 'hover:text-primary transition-colors' %>
       <p class='text-sm text-gray-500'><%= rating.user.ratings.count %> reviews</p>
     </div>
   </div>

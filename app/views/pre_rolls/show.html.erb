@@ -1,43 +1,45 @@
 <div class='flex flex-col gap-12 p-2 bg-primary-50 rounded-md'>
   <div class='flex flex-col md:flex-row gap-6 flex-1'>
     <div class='flex flex-col gap-4'>
-      <%= image_tag @edible.avatar.variant(:large) if @edible.avatar.attached? %>
-      <% if @edible.ratings.any? %>
-        <%= render 'shared/rating', score: @edible.ratings.average(:score) %>
+      <%= image_tag @pre_roll.avatar.variant(:large) if @pre_roll.avatar.attached? %>
+      <% if @pre_roll.ratings.any? %>
+        <%= render 'shared/rating', score: @pre_roll.ratings.average(:score) %>
       <% end %>
     </div>
     <div class='flex flex-col gap-4'>
       <div class='flex flex-col gap-4'>
         <div>
-          <h1 class='text-3xl font-bold'><%= @edible.name %></h1>
-          <%= link_to @edible.brand.name, brand_path(@edible.brand), class: 'font-light' %>
+          <h1 class='text-3xl font-bold'><%= @pre_roll.name %></h1>
+          <%= link_to @pre_roll.brand.name, brand_path(@pre_roll.brand), class: 'font-light' %>
         </div>
         <div class='flex gap-2'>
           <%= render layout: 'shared/popover' do %>
             <div class='flex gap-2 items-center cursor-pointer bg-primary text-white text-sm rounded-full p-2'>
-              <p><%= @edible.strain.capitalize %></p>
+              <p><%= @pre_roll.strain.capitalize %></p>
             </div>
             <% content_for :content do %>
-              <p><%= @edible.strain_effects %></p>
+              <p><%= @pre_roll.strain_effects %></p>
             <% end %>
           <% end %>
           <div class='flex gap-2 text-sm text-white bg-primary rounded-full p-2 w-fit'>
-            <p><%= @edible.mg_per_serving %>mg</p>
-            <p>per serving</p>
+            <p><%= @pre_roll.thc %>%</p>
+            <p>THC</p>
           </div>
-          <div class='flex gap-2 text-sm text-white bg-primary rounded-full p-2 w-fit'>
-            <p><%= @edible.food_type %></p>
-          </div>
+          <% if @pre_roll.infused %>
+            <div class='flex gap-2 text-sm text-white bg-primary rounded-full p-2 w-fit'>
+              <p>Infused</p>
+            </div>
+          <% end %>
         </div>
       </div>
       <div class='flex gap-2'>
-        <% @edible.effects.each do |effect| %>
+        <% @pre_roll.effects.each do |effect| %>
           <%= effect_pill(effect.name) %>
         <% end %>
       </div>
       <div class='flex flex-col gap-2'>
         <p class='font-bold'>Latest Review</p>
-        <%= render 'ratings/rating_card', rating: @edible.latest_review if @edible.latest_review %>
+        <%= render 'ratings/rating_card', rating: @pre_roll.latest_review if @pre_roll.latest_review %>
       </div>
     </div>
   </div>
@@ -48,7 +50,7 @@
   <div>
     <div class='flex flex-col gap-4'>
       <p class='font-bold'>All Reviews</p>
-      <%= render partial: 'ratings/rating_card', collection: @edible.ratings, as: :rating %>
+      <%= render partial: 'ratings/rating_card', collection: @pre_roll.ratings, as: :rating %>
     </div>
   </div>
 </div> 

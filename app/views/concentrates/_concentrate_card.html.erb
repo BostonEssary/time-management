@@ -1,21 +1,21 @@
 <div class='flex flex-col gap-4 bg-white border border-primary-100 shadow-sm w-72 p-4 rounded-lg hover:shadow-md transition-shadow'>
   <div class='flex flex-col gap-2'>
-    <%= image_tag flower.images.sample.variant(:thumb) %>
+    <%= image_tag concentrate.images.sample.variant(:thumb) if concentrate.images.attached? %>
     <div class='flex items-center gap-2'>
-      <h2 class='text-lg font-bold'><%= flower.name %></h2>
+      <h2 class='text-lg font-bold'><%= concentrate.name %></h2>
       <div class='flex text-xs text-white bg-primary rounded-full p-3 w-4 h-4 items-center justify-center'>
-        <p><%= flower.strain.capitalize.first %></p>
+        <p><%= concentrate.strain.capitalize.first %></p>
       </div>
     </div>
     <div class='flex'>
-      <% if flower.ratings_count.to_i > 0 && (last_review = @last_reviews[flower.id]) %>
+      <% if concentrate.ratings_count.to_i > 0 && (last_review = @last_reviews[concentrate.id]) %>
         <div data-controller="popover" data-popover-position-value="top" class="w-fit relative">
           <div data-action="mouseenter->popover#show mouseleave->popover#hide touchstart->popover#toggle">
             <div class='flex gap-2 items-center cursor-pointer group bg-primary-50 rounded-lg px-3 py-2 transition-colors hover:bg-primary-100'>
               <div class='text-xs'>
-                <%= render 'shared/rating', score: flower.average_score, text_size: 'text-xs' %>
+                <%= render 'shared/rating', score: concentrate.average_score, text_size: 'text-xs' %>
                 <div class="flex items-center gap-1">
-                  <p><%= flower.ratings_count %> reviews</p>
+                  <p><%= concentrate.ratings_count %> reviews</p>
                   <i class="fa-solid fa-circle-info text-primary-400 group-hover:text-primary transition-colors" title="Click or hover to see the latest review"></i>
                 </div>
               </div>
@@ -28,7 +28,7 @@
                 <div class="flex items-center gap-3 mb-2">
                   <%= image_tag last_review.user.avatar.variant(:thumb), class: "w-8 h-8 rounded-full" if last_review.user.avatar.attached? %>
                   <div>
-                    <%= link_to last_review.user.username, user_path(last_review.user), class: "font-medium hover:text-primary transition-colors" %>
+                    <p class="font-medium"><%= last_review.user.username %></p>
                     <%= render 'shared/rating', score: last_review.score, text_size: 'text-xs' %>
                   </div>
                 </div>
@@ -39,9 +39,13 @@
         </div>
       <% end %>
     </div>
+    <div class="flex gap-2 text-sm">
+      <span class="bg-primary-50 px-2 py-1 rounded-full"><%= concentrate.category %></span>
+      <span class="bg-primary-50 px-2 py-1 rounded-full"><%= concentrate.thc %>% THC</span>
+    </div>
   </div>
-  <%= link_to flower_path(flower), class: 'w-full text-center bg-secondary text-white py-2 rounded-lg hover:bg-secondary-600 transition-colors' do %>
+  <%= link_to concentrate_path(concentrate), class: 'w-full text-center bg-secondary text-white py-2 rounded-lg hover:bg-secondary-600 transition-colors' do %>
     View Details
     <i class="fa-solid fa-arrow-right ml-1"></i>
   <% end %>
-</div>
+</div> 
