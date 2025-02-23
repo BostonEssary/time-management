@@ -40,7 +40,7 @@
       <% end %>
     </div>
   </div>
-  <%= link_to flower_path(flower), class: 'w-full text-center bg-secondary text-white py-2 rounded-lg hover:bg-secondary-600 transition-colors' do %>
+  <%= link_to flower_path(flower), class: 'w-full text-center bg-secondary text-white py-2 rounded-lg hover:bg-secondary-600 transition-colors', data: { turbo_frame: "_top" } do %>
     View Details
     <i class="fa-solid fa-arrow-right ml-1"></i>
   <% end %>

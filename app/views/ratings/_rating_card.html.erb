@@ -10,8 +10,14 @@
   <div class='flex flex-col'>
     <%= render 'shared/rating', score: rating.score, text_size: "text-sm" %>
   </div>
-  <div class='flex flex-col'>
+  <div class='flex flex-col gap-2'>
     <p><%= rating.comment %></p>
-    <p class='text-sm text-gray-500'><%= rating.created_at.strftime("%B %d, %Y") %></p>
+    <% if rating.image.attached? %>
+      <%= image_tag rating.image, class: 'w-full max-w-xs rounded-lg shadow-sm' %>
+    <% end %>
+    <div class="flex items-center justify-between">
+      <p class='text-sm text-gray-500'><%= rating.created_at.strftime("%B %d, %Y") %></p>
+      <%= render "likes/like_button", likeable: rating %>
+    </div>
   </div>
 </div>

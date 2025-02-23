@@ -9,8 +9,41 @@ class FlowersController < ApplicationController
                     .select("flowers.*, COUNT(ratings.id) as ratings_count, AVG(ratings.score) as average_score")
                     .left_joins(:ratings)
                     .group("flowers.id")
-                    .page(params[:page])
-                    .per(6)
+
+    # Apply search if query present
+    if params[:query].present?
+      @flowers = @flowers.joins(:brand)
+                        .where("flowers.name ILIKE :query OR flowers.strain ILIKE :query OR brands.name ILIKE :query",
+                               query: "%#{params[:query]}%")
+    end
+
+    # Apply strain filter if present
+    if params[:filter].present?
+      @flowers = @flowers.where("LOWER(strain) = ?", params[:filter].downcase)
+    end
+
+    # Apply sorting
+    @flowers = case params[:sort]
+    when "name_asc"
+      @flowers.order("flowers.name ASC")
+    when "name_desc"
+      @flowers.order("flowers.name DESC")
+    when "thc_desc"
+      @flowers.order("flowers.thc DESC NULLS LAST")
+    when "thc_asc"
+      @flowers.order("flowers.thc ASC NULLS LAST")
+    when "rating_desc"
+      @flowers.order("AVG(ratings.score) DESC NULLS LAST")
+    when "rating_asc"
+      @flowers.order("AVG(ratings.score) ASC NULLS LAST")
+    else
+      @flowers.order("flowers.created_at DESC") # Default sort
+    end
+
+    @flowers = @flowers.page(params[:page]).per(6)
+
+    puts "flowers: #{@flowers.size}"
+
 
     # Get the last review for each flower
     last_reviews = Rating.select("DISTINCT ON (ratable_id) *")

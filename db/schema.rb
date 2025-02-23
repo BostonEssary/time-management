@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_02_09_035425) do
+ActiveRecord::Schema[7.2].define(version: 2025_02_23_100702) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -99,6 +99,16 @@ ActiveRecord::Schema[7.2].define(version: 2025_02_09_035425) do
     t.index ["follower_id"], name: "index_follows_on_follower_id"
   end
 
+  create_table "likes", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.string "likeable_type", null: false
+    t.bigint "likeable_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["likeable_type", "likeable_id"], name: "index_likes_on_likeable"
+    t.index ["user_id"], name: "index_likes_on_user_id"
+  end
+
   create_table "pre_rolls", force: :cascade do |t|
     t.string "name"
     t.string "strain"
@@ -157,6 +167,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_02_09_035425) do
   add_foreign_key "flowers", "brands"
   add_foreign_key "follows", "users", column: "followee_id"
   add_foreign_key "follows", "users", column: "follower_id"
+  add_foreign_key "likes", "users"
   add_foreign_key "pre_rolls", "brands"
   add_foreign_key "product_effects", "effects"
   add_foreign_key "ratings", "users"

@@ -29,6 +29,9 @@ Rails.application.routes.draw do
   resources :pre_rolls
   resources :brands, concerns: :searchable
   resources :ratings, only: [ :new, :create ]
+  resources :ratings do
+    resource :like, only: [:create, :destroy]
+  end
   namespace :api do
     resources :brands, only: [ :index ]
   end
