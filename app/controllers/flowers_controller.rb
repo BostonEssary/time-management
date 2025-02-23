@@ -1,4 +1,6 @@
 class FlowersController < ApplicationController
+  include Ratable
+
   layout "product", only: [ :show ]
   before_action :set_flower, only: [ :show ]
 

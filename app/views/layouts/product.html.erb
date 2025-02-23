@@ -29,7 +29,7 @@
       <%= render "shared/flash" %>
       <%= yield %>
       <div class='sticky bottom-0 flex justify-end p-8'>
-        <%= link_to new_rating_path, class: 'bg-primary text-white w-16 h-16 rounded-full flex items-center justify-center', data: { turbo_frame: 'new_rating' } do %>
+        <%= link_to new_rating_path(ratable_id: @ratable.id, ratable_type: @ratable.class.name), class: 'bg-primary text-white w-16 h-16 rounded-full flex items-center justify-center', data: { turbo_frame: 'new_rating' } do %>
           <i class="fa-solid fa-plus"></i>
         <% end %>
       </div>

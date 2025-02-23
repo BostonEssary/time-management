@@ -1,4 +1,6 @@
 class EdiblesController < ApplicationController
+  include Ratable
+
   layout "product", only: [ :show ]
   before_action :set_edible, only: [ :show ]
 
@@ -48,7 +50,7 @@ class EdiblesController < ApplicationController
   private
 
   def edible_params
-    params.require(:edible).permit(:name, :strain, :mg_per_serving, :food_type, :brand_id, :avatar, images: [])
+    params.require(:edible).permit(:name, :thc, :strain, :mg_per_serving, :food_type, :brand_id, :avatar, images: [])
   end
 
   def set_edible

@@ -1,4 +1,6 @@
 class PreRollsController < ApplicationController
+  include Ratable
+
   layout "product", only: [ :show ]
   before_action :set_pre_roll, only: [ :show ]
 

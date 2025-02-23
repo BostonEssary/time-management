@@ -1,6 +1,48 @@
 <%= turbo_frame_tag 'new_rating' do %>
-    <%= form_with model: @rating, class: 'flex flex-col gap-4 p-4', data: { controller: 'scroll-to' } do |form| %>
-        <%= form.text_area :comment, placeholder: 'Comment' %>
-        <%= form.submit 'Submit' %>
+  <div class="w-full">
+    <%= form_with model: @rating, class: 'flex flex-col gap-4 bg-white rounded-lg shadow-sm p-6', data: { controller: 'scroll-to rating' } do |form| %>
+      <div class="flex flex-col gap-2">
+        <label class="font-medium text-gray-700">Your Rating</label>
+        <div class="flex gap-2">
+          <% 5.times do |i| %>
+            <%= form.radio_button :score, i + 1, 
+                class: 'hidden', 
+                id: "rating_score_#{i + 1}",
+                data: { rating_target: "input" } %>
+            <label for="rating_score_#{i + 1}" 
+                  class="cursor-pointer"
+                  data-action="click->rating#select"
+                  data-rating-score-value="<%= i + 1 %>">
+              <i class="fa-cannabis fa-solid text-2xl text-gray-300 hover:text-primary transition-colors"
+                 data-rating-target="icon"></i>
+            </label>
+          <% end %>
+        </div>
+      </div>
+
+      <div class="flex flex-col gap-2">
+        <label class="font-medium text-gray-700">Your Comment</label>
+        <%= form.text_area :comment, 
+            placeholder: 'Share your experience...', 
+            class: 'w-full rounded-lg border-gray-300 focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-50 resize-none',
+            rows: 4 %>
+      </div>
+
+      <div class="flex flex-col gap-2">
+        <label class="font-medium text-gray-700">Add a Photo</label>
+        <div class="relative">
+          <%= form.file_field :image, 
+              class: 'w-full rounded-lg border border-gray-300 file:mr-4 file:py-2 file:px-4 file:border-0 file:text-sm file:font-medium file:bg-primary file:text-white hover:file:bg-primary-dark',
+              accept: 'image/*',
+              direct_upload: true %>
+        </div>
+      </div>
+
+      <%= form.hidden_field :ratable_id, value: @ratable.id %>
+      <%= form.hidden_field :ratable_type, value: @ratable.class.name %>
+
+      <%= form.submit 'Submit Review', 
+          class: 'w-full bg-primary text-white font-medium py-3 px-4 rounded-lg hover:bg-primary-dark transition-colors mt-4' %>
     <% end %>
+  </div>
 <% end %>

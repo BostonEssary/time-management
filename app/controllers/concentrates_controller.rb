@@ -1,4 +1,6 @@
 class ConcentratesController < ApplicationController
+  include Ratable
+
   layout "product", only: [ :show ]
   before_action :set_concentrate, only: [ :show ]
 
