@@ -2,7 +2,9 @@ class UsersController < ApplicationController
   before_action :following, only: [ :show ]
   before_action :set_user
 
-  def show; end
+  def show
+    @ratings = @user.ratings.includes(:ratable).order(created_at: :desc)
+  end
 
   private
 
