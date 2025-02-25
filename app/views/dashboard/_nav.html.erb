@@ -1,69 +1,110 @@
-<div
-  class='
-    hidden md:flex h-10 justify-between p-2 items-center bg-primary-400 text-white
-    rounded-md
-  '
->
-  <%= link_to "SiteName", root_path %>
-  <div class='w-1/3'>
-    <ul class='flex justify-between'>
-      <li>Page 1</li>
-      <li>Page 2</li>
-      <li>Page 3</li>
-    </ul>
+<%# Desktop Navigation %>
+<div class="hidden md:flex h-16 justify-between px-8 items-center bg-primary text-white">
+  <%= link_to "SiteName", root_path, class: "text-xl font-bold text-white" %>
+  
+  <%# Main Navigation Links %>
+  <div class="flex space-x-8">
+    <%= link_to flowers_path, class: "text-white hover:text-white/80 transition-colors flex items-center space-x-2 py-5" do %>
+      <i class="fas fa-cannabis"></i>
+      <span>Flower</span>
+    <% end %>
+    
+    <%= link_to pre_rolls_path, class: "text-white hover:text-white/80 transition-colors flex items-center space-x-2 py-5" do %>
+      <i class="fas fa-joint"></i>
+      <span>Pre-rolls</span>
+    <% end %>
+    
+    <%= link_to concentrates_path, class: "text-white hover:text-white/80 transition-colors flex items-center space-x-2 py-5" do %>
+      <i class="fas fa-vial"></i>
+      <span>Concentrates</span>
+    <% end %>
+    
+    <%= link_to edibles_path, class: "text-white hover:text-white/80 transition-colors flex items-center space-x-2 py-5" do %>
+      <i class="fas fa-cookie"></i>
+      <span>Edibles</span>
+    <% end %>
   </div>
+
+  <%# Auth Links %>
   <div>
     <% if user_signed_in? %>
-      <%= button_to "Logout", destroy_user_session_path, method: :delete %>
+      <%= button_to destroy_user_session_path, 
+          method: :delete,
+          class: "text-white hover:text-white/80 transition-colors flex items-center space-x-2" do %>
+        <i class="fas fa-sign-out-alt"></i>
+        <span>Logout</span>
+      <% end %>
     <% else %>
-      <%= link_to "Sign In",
-      new_user_session_path,
-      class: "bg-primary text-white p-2 rounded-md" %>
+      <%= link_to new_user_session_path,
+          class: "bg-white text-primary px-6 py-2 rounded-lg hover:bg-white/90 transition-colors" do %>
+        Sign In
+      <% end %>
     <% end %>
   </div>
 </div>
 
-<div data-controller='nav' class='p-6 md:hidden'>
-  <div class='fixed top-0 left-0 right-0 z-50 bg-white border-b border-gray-200'>
-    <div class='flex justify-between items-center h-14 px-4'>
-      <%= link_to "SiteName", root_path %>
-      <button class='w-fit' data-action='nav#toggleMobileMenu'>
-        <i class="fa-solid fa-bars text-2xl"></i>
+<%# Mobile Navigation %>
+<div data-controller="nav" class="md:hidden">
+  <%# Mobile Header %>
+  <div class="fixed top-0 left-0 right-0 z-50 bg-primary text-white">
+    <div class="flex justify-between items-center h-16 px-6">
+      <%= link_to "SiteName", root_path, class: "text-xl font-bold text-white" %>
+      <button class="w-fit p-2" data-action="nav#toggleMobileMenu">
+        <i class="fa-solid fa-bars text-2xl text-white"></i>
       </button>
     </div>
   </div>
 
-  <div
-    class='
-      hidden fixed right-0 top-0 h-screen bg-white z-50 w-2/3 shadow-lg
-      transition-transform duration-300 ease-in-out border-l border-gray-200
-    '
-    data-nav-target='mobileMenu'
-  >
-    <div class='p-6 space-y-6'>
-      <div class='flex justify-end'>
-        <button class='text-gray-500' data-action='nav#toggleMobileMenu'>
-          <i class="fa-solid fa-times text-xl"></i>
-        </button>
-      </div>
+  <%# Mobile Menu %>
+  <div class="hidden fixed inset-0 z-50 bg-gray-800/50" data-nav-target="overlay" data-action="click->nav#toggleMobileMenu">
+    <div class="fixed right-0 top-0 h-screen bg-white w-64 shadow-lg transform transition-transform duration-300 ease-in-out">
+      <div class="p-6 space-y-6">
+        <%# Close Button %>
+        <div class="flex justify-end">
+          <button class="text-gray-500 p-2" data-action="nav#toggleMobileMenu">
+            <i class="fa-solid fa-times text-xl"></i>
+          </button>
+        </div>
 
-      <ul class='space-y-4'>
-        <li><%= link_to "Page 1", "#", class: "block py-2 hover:text-primary" %></li>
-        <li><%= link_to "Page 2", "#", class: "block py-2 hover:text-primary" %></li>
-        <li><%= link_to "Page 3", "#", class: "block py-2 hover:text-primary" %></li>
-      </ul>
+        <%# Mobile Navigation Links %>
+        <nav class="space-y-4">
+          <%= link_to flowers_path, class: "flex items-center space-x-3 text-gray-600 hover:text-primary transition-colors py-2" do %>
+            <i class="fas fa-cannabis w-6"></i>
+            <span>Flower</span>
+          <% end %>
 
-      <div class='pt-4 border-t border-gray-200'>
-        <% if user_signed_in? %>
-          <%= button_to "Logout",
-          destroy_user_session_path,
-          method: :delete,
-          class: "w-full text-left py-2" %>
-        <% else %>
-          <%= link_to "Sign In",
-          new_user_session_path,
-          class: "bg-primary text-white p-2 rounded-md inline-block" %>
-        <% end %>
+          <%= link_to pre_rolls_path, class: "flex items-center space-x-3 text-gray-600 hover:text-primary transition-colors py-2" do %>
+            <i class="fas fa-joint w-6"></i>
+            <span>Pre-rolls</span>
+          <% end %>
+
+          <%= link_to concentrates_path, class: "flex items-center space-x-3 text-gray-600 hover:text-primary transition-colors py-2" do %>
+            <i class="fas fa-vial w-6"></i>
+            <span>Concentrates</span>
+          <% end %>
+
+          <%= link_to edibles_path, class: "flex items-center space-x-3 text-gray-600 hover:text-primary transition-colors py-2" do %>
+            <i class="fas fa-cookie w-6"></i>
+            <span>Edibles</span>
+          <% end %>
+        </nav>
+
+        <%# Mobile Auth Links %>
+        <div class="pt-4 border-t border-gray-200">
+          <% if user_signed_in? %>
+            <%= button_to destroy_user_session_path,
+                method: :delete,
+                class: "flex items-center space-x-2 text-gray-600 hover:text-primary transition-colors py-2" do %>
+              <i class="fas fa-sign-out-alt w-6"></i>
+              <span>Logout</span>
+            <% end %>
+          <% else %>
+            <%= link_to new_user_session_path,
+                class: "w-full bg-primary text-white py-2 px-4 rounded-lg text-center hover:bg-primary-dark transition-colors" do %>
+              Sign In
+            <% end %>
+          <% end %>
+        </div>
       </div>
     </div>
   </div>
