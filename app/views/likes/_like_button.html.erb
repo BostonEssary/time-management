@@ -1,5 +1,5 @@
 <%# locals: (likeable:) %>
-<div id="<%= dom_id(likeable) %>_likes" class="flex items-center gap-2">
+<div id="<%= dom_id(likeable, :like) %>" class="flex items-center gap-2">
   <% if user_signed_in? %>
     <% if likeable.liked_by?(current_user) %>
       <%= button_to polymorphic_path([likeable, :like]), 
