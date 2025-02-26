@@ -1,11 +1,156 @@
-<div class='container mx-auto px-4 py-8'>
-  <div class='bg-primary-50 rounded-lg p-6'>
-    <div class='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 justify-items-center'>
-      <%= render partial: "edibles/edible_card", collection: @edibles, as: :edible %>
+<%# Page Wrapper %>
+<div class="min-h-screen bg-gradient-to-b from-primary-50/50 to-white">
+  <%# Hero Banner %>
+  <div class="relative h-[400px]">
+    <%= image_tag "edible-hero.jpg", class: "w-full h-full object-cover" %>
+    <div class="absolute inset-0 bg-gradient-to-r from-black/70 to-black/30 flex items-center">
+      <div class="container mx-auto px-4">
+        <div class="max-w-2xl text-white">
+          <h1 class="text-5xl font-bold mb-4">Edibles</h1>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <%# Main Content %>
+  <div class="container mx-auto px-4 -mt-8 pb-12">
+    <%# Filters Section %>
+    <div class="mb-8 bg-white rounded-xl shadow-lg p-6 relative z-10">
+      <div class="flex flex-col gap-6">
+        <%# Title and Description %>
+        <div>
+          <h2 class="text-lg font-semibold text-primary-900">Search & Filter</h2>
+          <p class="text-sm text-primary-600">Find the perfect edible for your needs</p>
+        </div>
+
+        <%# Search Bar %>
+        <div class="max-w-2xl">
+          <%= form_with url: edibles_path, method: :get, class: "flex gap-2", data: { turbo_frame: "edibles", controller: "search" } do |f| %>
+            <div class="flex-1 relative">
+              <%= f.text_field :query,
+                  value: params[:query],
+                  class: "w-full pl-10 pr-4 py-3 rounded-lg border border-primary-200 focus:ring-2 focus:ring-primary-300 focus:border-primary-300 placeholder-primary-400 bg-white",
+                  placeholder: "Search by name, strain, food type, or brand...",
+                  data: { action: "input->search#debounce" } %>
+              <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-primary-400"></i>
+            </div>
+          <% end %>
+        </div>
+
+        <%# Filters Row %>
+        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pt-4 border-t border-primary-100">
+          <%# Strain Type Filter %>
+          <div class="flex flex-wrap gap-2">
+            <span class="text-primary-700 font-medium py-2">Strain Type:</span>
+            <%= link_to "All", edibles_path(sort: params[:sort], query: params[:query], food_type: params[:food_type]), class: "px-4 py-2 rounded-full #{params[:filter].blank? ? 'bg-primary text-white' : 'bg-primary-50 text-primary hover:bg-primary-100'}" %>
+            <%= link_to "Sativa", edibles_path(filter: 'sativa', sort: params[:sort], query: params[:query], food_type: params[:food_type]), class: "px-4 py-2 rounded-full #{params[:filter] == 'sativa' ? 'bg-primary text-white' : 'bg-primary-50 text-primary hover:bg-primary-100'}" %>
+            <%= link_to "Indica", edibles_path(filter: 'indica', sort: params[:sort], query: params[:query], food_type: params[:food_type]), class: "px-4 py-2 rounded-full #{params[:filter] == 'indica' ? 'bg-primary text-white' : 'bg-primary-50 text-primary hover:bg-primary-100'}" %>
+            <%= link_to "Hybrid", edibles_path(filter: 'hybrid', sort: params[:sort], query: params[:query], food_type: params[:food_type]), class: "px-4 py-2 rounded-full #{params[:filter] == 'hybrid' ? 'bg-primary text-white' : 'bg-primary-50 text-primary hover:bg-primary-100'}" %>
+          </div>
+
+          <%# Food Type Filter %>
+          <div class="w-full sm:w-auto">
+            <%= form_with url: edibles_path, method: :get, class: "flex items-center gap-2", data: { turbo_frame: "edibles", controller: "auto-submit" } do |f| %>
+              <%= f.hidden_field :filter, value: params[:filter] if params[:filter].present? %>
+              <%= f.hidden_field :query, value: params[:query] if params[:query].present? %>
+              <%= f.hidden_field :sort, value: params[:sort] if params[:sort].present? %>
+              <label class="text-primary-700 font-medium whitespace-nowrap">Food Type:</label>
+              <%= f.select :food_type,
+                  options_for_select(
+                    [["All Types", nil]] + Edible::FOOD_TYPES.map { |t| [t, t.downcase] },
+                    params[:food_type]
+                  ),
+                  {},
+                  {
+                    class: "min-w-[200px] border border-primary-200 rounded-lg px-3 py-2 focus:ring-2 focus:ring-primary-300 focus:border-primary-300 bg-white",
+                    data: { action: "change->auto-submit#submit" }
+                  }
+              %>
+            <% end %>
+          </div>
+          
+          <%# Sort Options %>
+          <div class="w-full sm:w-auto">
+            <%= form_with url: edibles_path, method: :get, class: "flex items-center gap-2", data: { turbo_frame: "edibles", controller: "auto-submit" } do |f| %>
+              <%= f.hidden_field :filter, value: params[:filter] if params[:filter].present? %>
+              <%= f.hidden_field :query, value: params[:query] if params[:query].present? %>
+              <%= f.hidden_field :food_type, value: params[:food_type] if params[:food_type].present? %>
+              <label class="text-primary-700 font-medium whitespace-nowrap">Sort by:</label>
+              <%= f.select :sort,
+                  [
+                    ['Name (A-Z)', 'name_asc'],
+                    ['Name (Z-A)', 'name_desc'],
+                    ['mg/Serving (High-Low)', 'mg_desc'],
+                    ['mg/Serving (Low-High)', 'mg_asc'],
+                    ['Food Type (A-Z)', 'food_type_asc'],
+                    ['Food Type (Z-A)', 'food_type_desc'],
+                    ['Rating (High-Low)', 'rating_desc'],
+                    ['Rating (Low-High)', 'rating_asc']
+                  ],
+                  { selected: params[:sort], include_blank: 'Featured' },
+                  {
+                    class: "min-w-[200px] border border-primary-200 rounded-lg px-3 py-2 focus:ring-2 focus:ring-primary-300 focus:border-primary-300 bg-white",
+                    data: { action: "change->auto-submit#submit" }
+                  }
+              %>
+            <% end %>
+          </div>
+        </div>
+
+        <%# Active Filters Display %>
+        <% if params[:filter].present? || params[:sort].present? || params[:query].present? || params[:food_type].present? %>
+          <div class="flex flex-wrap items-center gap-2 pt-2 border-t border-primary-100">
+            <span class="text-sm text-primary-600">Active filters:</span>
+            <% if params[:query].present? %>
+              <span class="text-sm bg-primary-50 text-primary px-3 py-1 rounded-full">
+                Search: "<%= params[:query] %>"
+                <%= link_to "×", edibles_path(filter: params[:filter], sort: params[:sort], food_type: params[:food_type]), class: "ml-1 font-bold hover:text-primary-700" %>
+              </span>
+            <% end %>
+            <% if params[:filter].present? %>
+              <span class="text-sm bg-primary-50 text-primary px-3 py-1 rounded-full">
+                <%= params[:filter].titleize %>
+                <%= link_to "×", edibles_path(sort: params[:sort], query: params[:query], food_type: params[:food_type]), class: "ml-1 font-bold hover:text-primary-700" %>
+              </span>
+            <% end %>
+            <% if params[:food_type].present? %>
+              <span class="text-sm bg-primary-50 text-primary px-3 py-1 rounded-full">
+                Type: <%= params[:food_type].titleize %>
+                <%= link_to "×", edibles_path(filter: params[:filter], sort: params[:sort], query: params[:query]), class: "ml-1 font-bold hover:text-primary-700" %>
+              </span>
+            <% end %>
+            <% if params[:sort].present? %>
+              <span class="text-sm bg-primary-50 text-primary px-3 py-1 rounded-full">
+                <%= params[:sort].titleize.gsub('Asc', '↑').gsub('Desc', '↓') %>
+                <%= link_to "×", edibles_path(filter: params[:filter], query: params[:query], food_type: params[:food_type]), class: "ml-1 font-bold hover:text-primary-700" %>
+              </span>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
     </div>
 
-    <div class="mt-8 flex justify-center">
-      <%= paginate @edibles %>
+    <%# Products Grid %>
+    <div class="bg-white rounded-xl shadow-lg p-6">
+      <turbo-frame id="edibles" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 justify-items-center">
+        <%= render partial: "edibles/edible_card", collection: @edibles, as: :edible %>
+      </turbo-frame>
+
+      <%# Pagination %>
+      <div class="mt-8 flex justify-center">
+        <%= paginate @edibles %>
+      </div>
     </div>
+
+    <%# Empty State %>
+    <% if @edibles.empty? %>
+      <div class="text-center py-12">
+        <div class="mb-4">
+          <i class="fa-solid fa-cookie-bite text-6xl text-primary-300"></i>
+        </div>
+        <h3 class="text-xl font-semibold text-gray-900 mb-2">No edibles found</h3>
+        <p class="text-gray-600">Try adjusting your search or filters to find what you're looking for.</p>
+      </div>
+    <% end %>
   </div>
 </div> 

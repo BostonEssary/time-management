@@ -5,21 +5,8 @@ class PreRollsController < ApplicationController
   before_action :set_pre_roll, only: [ :show ]
 
   def index
-    @pre_rolls = PreRoll.includes(ratings: :user)
-                       .select("pre_rolls.*, COUNT(ratings.id) as ratings_count, AVG(ratings.score) as average_score")
-                       .left_joins(:ratings)
-                       .group("pre_rolls.id")
-                       .page(params[:page])
-                       .per(6)
-
-    # Get the last review for each pre_roll
-    last_reviews = Rating.select("DISTINCT ON (ratable_id) *")
-                        .where(ratable_type: "PreRoll", ratable_id: @pre_rolls.map(&:id))
-                        .order("ratable_id, created_at DESC")
-                        .includes(:user)
-
-    # Create a hash of pre_roll_id => last_review
-    @last_reviews = last_reviews.index_by(&:ratable_id)
+    @pre_rolls = fetch_filtered_pre_rolls
+    @last_reviews = PreRoll.fetch_last_reviews(@pre_rolls)
   end
 
   def create
@@ -48,6 +35,28 @@ class PreRollsController < ApplicationController
   end
 
   private
+
+  def fetch_filtered_pre_rolls
+    PreRoll.with_ratings_and_score
+           .then { |scope| apply_search(scope) }
+           .then { |scope| apply_filters(scope) }
+           .then { |scope| apply_sorting(scope) }
+           .page(params[:page])
+           .per(6)
+  end
+
+  def apply_search(scope)
+    scope.search_by_term(params[:query])
+  end
+
+  def apply_filters(scope)
+    scope.filter_by_strain(params[:filter])
+         .filter_by_infused(params[:infused])
+  end
+
+  def apply_sorting(scope)
+    scope.sort_by_param(params[:sort])
+  end
 
   def pre_roll_params
     params.require(:pre_roll).permit(:name, :thc, :strain, :infused, :brand_id, :avatar, images: [])

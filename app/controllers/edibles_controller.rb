@@ -5,21 +5,8 @@ class EdiblesController < ApplicationController
   before_action :set_edible, only: [ :show ]
 
   def index
-    @edibles = Edible.includes(ratings: :user)
-                    .select("edibles.*, COUNT(ratings.id) as ratings_count, AVG(ratings.score) as average_score")
-                    .left_joins(:ratings)
-                    .group("edibles.id")
-                    .page(params[:page])
-                    .per(6)
-
-    # Get the last review for each edible
-    last_reviews = Rating.select("DISTINCT ON (ratable_id) *")
-                        .where(ratable_type: "Edible", ratable_id: @edibles.map(&:id))
-                        .order("ratable_id, created_at DESC")
-                        .includes(:user)
-
-    # Create a hash of edible_id => last_review
-    @last_reviews = last_reviews.index_by(&:ratable_id)
+    @edibles = fetch_filtered_edibles
+    @last_reviews = Edible.fetch_last_reviews(@edibles)
   end
 
   def create
@@ -49,8 +36,30 @@ class EdiblesController < ApplicationController
 
   private
 
+  def fetch_filtered_edibles
+    Edible.with_ratings_and_score
+          .then { |scope| apply_search(scope) }
+          .then { |scope| apply_filters(scope) }
+          .then { |scope| apply_sorting(scope) }
+          .page(params[:page])
+          .per(6)
+  end
+
+  def apply_search(scope)
+    scope.search_by_term(params[:query])
+  end
+
+  def apply_filters(scope)
+    scope.filter_by_strain(params[:filter])
+         .filter_by_food_type(params[:food_type])
+  end
+
+  def apply_sorting(scope)
+    scope.sort_by_param(params[:sort])
+  end
+
   def edible_params
-    params.require(:edible).permit(:name, :thc, :strain, :mg_per_serving, :food_type, :brand_id, :avatar, images: [])
+    params.require(:edible).permit(:name, :mg_per_serving, :strain, :food_type, :brand_id, :avatar, images: [])
   end
 
   def set_edible

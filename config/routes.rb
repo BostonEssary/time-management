@@ -13,13 +13,13 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "posts#index"
-  root "dashboard#index"
+  root "dashboard#show"
 
   concern :searchable do
     get :search, on: :collection
   end
 
-  resources :dashboard
+  resource :dashboard
   resources :follows, only: [ :create, :destroy ]
   resources :users, only: [ :show, :edit, :update ]
   resource :profile, only: [ :show, :edit, :update ]
@@ -29,6 +29,9 @@ Rails.application.routes.draw do
   resources :pre_rolls
   resources :brands, concerns: :searchable
   resources :ratings, only: [ :new, :create ]
+  resources :ratings do
+    resource :like, only: [:create, :destroy]
+  end
   namespace :api do
     resources :brands, only: [ :index ]
   end

@@ -1,6 +1,6 @@
 <%= turbo_frame_tag 'new_rating' do %>
   <div class="w-full">
-    <%= form_with model: @rating, class: 'flex flex-col gap-4 bg-white rounded-lg shadow-sm p-6', data: { controller: 'scroll-to rating' } do |form| %>
+    <%= form_with model: @rating, class: 'flex flex-col gap-4 bg-white rounded-lg shadow-sm p-6', data: { controller: 'scroll-to rating image-preview' } do |form| %>
       <div class="flex flex-col gap-2">
         <label class="font-medium text-gray-700">Your Rating</label>
         <div class="flex gap-2">
@@ -34,7 +34,12 @@
           <%= form.file_field :image, 
               class: 'w-full rounded-lg border border-gray-300 file:mr-4 file:py-2 file:px-4 file:border-0 file:text-sm file:font-medium file:bg-primary file:text-white hover:file:bg-primary-dark',
               accept: 'image/*',
-              direct_upload: true %>
+              direct_upload: true,
+              data: { 
+                image_preview_target: "input",
+                action: "change->image-preview#preview"
+              } %>
+          <img class="mt-4 max-w-xs rounded-lg shadow-sm" data-image-preview-target="preview" />
         </div>
       </div>
 

@@ -1,4 +1,4 @@
-<div class='flex flex-col gap-4 bg-white border border-primary-100 shadow-sm w-72 p-4 rounded-lg hover:shadow-md transition-shadow'>
+<div class='flex flex-col gap-4 justify-between bg-white border border-primary-100 shadow-sm w-72 p-4 rounded-lg hover:shadow-md transition-shadow'>
   <div class='flex flex-col gap-2'>
     <%= image_tag flower.images.sample.variant(:thumb) %>
     <div class='flex items-center gap-2'>
@@ -40,7 +40,7 @@
       <% end %>
     </div>
   </div>
-  <%= link_to flower_path(flower), class: 'w-full text-center bg-secondary text-white py-2 rounded-lg hover:bg-secondary-600 transition-colors' do %>
+  <%= link_to flower_path(flower), class: 'w-full text-center bg-secondary text-white py-2 rounded-lg hover:bg-secondary-600 transition-colors', data: { turbo_frame: "_top" } do %>
     View Details
     <i class="fa-solid fa-arrow-right ml-1"></i>
   <% end %>

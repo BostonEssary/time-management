@@ -1,0 +1,18 @@
+
+<div class="min-h-screen bg-gray-50">
+  <%# Header %>
+  <div class="bg-white border-b border-gray-200 sticky top-0 z-10">
+    <div class="max-w-2xl mx-auto px-4 py-3">
+      <h1 class="text-xl font-bold text-gray-900">Your Feed</h1>
+    </div>
+  </div>
+
+  <div class="max-w-2xl mx-auto px-4 py-6">
+      <%= turbo_frame_tag "timeline", class: "space-y-6", loading: :lazy do %>
+        <%= render partial: "ratings/rating", collection: @ratings %>
+      <% end %>
+  </div>
+  <div class="mt-8 flex justify-center">
+      <%= paginate @ratings %>
+    </div>
+</div>

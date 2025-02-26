@@ -1,0 +1,55 @@
+<div class="bg-white rounded-lg shadow p-4 space-y-4">
+  <div class="flex items-center space-x-3">
+    <% if rating.user.avatar.attached? %>
+      <%= image_tag rating.user.avatar.variant(:thumb), class: "w-10 h-10 rounded-full" %>
+    <% else %>
+      <div class="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center">
+        <i class="fas fa-user text-gray-400"></i>
+      </div>
+    <% end %>
+    <div>
+      <%= link_to rating.user.username, user_path(rating.user), class: "font-semibold hover:text-primary-600", data: { turbo_frame: "_top" } %>
+      <p class="text-sm text-gray-500"><%= time_ago_in_words(rating.created_at) %> ago</p>
+    </div>
+  </div>
+
+  <div class="space-y-2">
+    <div class="flex items-center space-x-2">
+      <div class="flex">
+        <% rating.score.times do %>
+          <i class="fas fa-star text-yellow-400"></i>
+        <% end %>
+        <% (5 - rating.score).times do %>
+          <i class="far fa-star text-yellow-400"></i>
+        <% end %>
+      </div>
+      <span class="text-sm text-gray-500">
+        reviewing <%= link_to rating.ratable.name, polymorphic_path(rating.ratable), class: "text-primary-600 hover:underline", data: { turbo_frame: "_top" } %>
+      </span>
+    </div>
+
+    <% if rating.comment.present? %>
+      <p class="text-gray-700"><%= rating.comment %></p>
+    <% end %>
+
+    <% if rating.image.attached? %>
+      <%= image_tag rating.image, class: "rounded-lg w-full object-cover max-h-96" %>
+    <% end %>
+  </div>
+
+  <div class="flex items-center space-x-4 pt-2 border-t">
+    <%= turbo_frame_tag dom_id(rating, :like) do %>
+      <% if rating.liked_by?(current_user) %>
+        <%= button_to rating_like_path(rating), method: :delete, class: "flex items-center space-x-1 text-primary-600" do %>
+          <i class="fas fa-heart"></i>
+          <span><%= rating.likes.count %></span>
+        <% end %>
+      <% else %>
+        <%= button_to rating_like_path(rating), method: :post, class: "flex items-center space-x-1 text-gray-500 hover:text-primary-600" do %>
+          <i class="far fa-heart"></i>
+          <span><%= rating.likes.count %></span>
+        <% end %>
+      <% end %>
+    <% end %>
+  </div>
+</div> 
