@@ -5,21 +5,8 @@ class ConcentratesController < ApplicationController
   before_action :set_concentrate, only: [ :show ]
 
   def index
-    @concentrates = Concentrate.includes(ratings: :user)
-                             .select("concentrates.*, COUNT(ratings.id) as ratings_count, AVG(ratings.score) as average_score")
-                             .left_joins(:ratings)
-                             .group("concentrates.id")
-                             .page(params[:page])
-                             .per(6)
-
-    # Get the last review for each concentrate
-    last_reviews = Rating.select("DISTINCT ON (ratable_id) *")
-                        .where(ratable_type: "Concentrate", ratable_id: @concentrates.map(&:id))
-                        .order("ratable_id, created_at DESC")
-                        .includes(:user)
-
-    # Create a hash of concentrate_id => last_review
-    @last_reviews = last_reviews.index_by(&:ratable_id)
+    @concentrates = fetch_filtered_concentrates
+    @last_reviews = Concentrate.fetch_last_reviews(@concentrates)
   end
 
   def create
@@ -48,6 +35,28 @@ class ConcentratesController < ApplicationController
   end
 
   private
+
+  def fetch_filtered_concentrates
+    Concentrate.with_ratings_and_score
+              .then { |scope| apply_search(scope) }
+              .then { |scope| apply_filters(scope) }
+              .then { |scope| apply_sorting(scope) }
+              .page(params[:page])
+              .per(6)
+  end
+
+  def apply_search(scope)
+    scope.search_by_term(params[:query])
+  end
+
+  def apply_filters(scope)
+    scope.filter_by_strain(params[:filter])
+         .filter_by_category(params[:category])
+  end
+
+  def apply_sorting(scope)
+    scope.sort_by_param(params[:sort])
+  end
 
   def concentrate_params
     params.require(:concentrate).permit(:name, :thc, :strain, :category, :brand_id, :avatar, images: [])
