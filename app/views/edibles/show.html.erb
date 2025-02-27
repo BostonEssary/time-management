@@ -1,7 +1,7 @@
 <div class='flex flex-col gap-12 p-2 bg-primary-50 rounded-md'>
   <div class='flex flex-col md:flex-row gap-6 flex-1'>
     <div class='flex flex-col gap-4'>
-      <%= image_tag @edible.avatar.variant(:large) if @edible.avatar.attached? %>
+      <%= image_tag @edible.images.first.variant(:large) if @edible.images.attached? %>
       <% if @edible.ratings.any? %>
         <%= render 'shared/rating', score: @edible.ratings.average(:score) %>
       <% end %>
@@ -35,10 +35,12 @@
           <%= effect_pill(effect.name) %>
         <% end %>
       </div>
-      <div class='flex flex-col gap-2'>
-        <p class='font-bold'>Latest Review</p>
-        <%= render 'ratings/rating_card', rating: @edible.latest_review if @edible.latest_review %>
-      </div>
+      <% if @edible.ratings.any? %>
+        <div class='flex flex-col gap-2'>
+          <p class='font-bold'>Latest Review</p>
+          <%= render 'ratings/rating_card', rating: @edible.latest_review %>
+        </div>
+      <% end %>
     </div>
   </div>
   <div class='flex flex-col flex-1 gap-8'>
@@ -48,7 +50,11 @@
   <div>
     <div class='flex flex-col gap-4'>
       <p class='font-bold'>All Reviews</p>
-      <%= render partial: 'ratings/rating_card', collection: @edible.ratings, as: :rating %>
+      <% if @edible.ratings.any? %>
+        <%= render partial: 'ratings/rating_card', collection: @edible.ratings, as: :rating %>
+      <% else %>
+        <%= render 'shared/no_reviews', ratable: @edible %>
+      <% end %>
     </div>
   </div>
 </div> 

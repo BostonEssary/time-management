@@ -24,9 +24,9 @@
         </div>
 
         <%# Search Bar %>
-        <div class="max-w-2xl">
-          <%= form_with url: edibles_path, method: :get, class: "flex gap-2", data: { turbo_frame: "edibles", controller: "search" } do |f| %>
-            <div class="flex-1 relative">
+        <div class="max-w-2xl flex gap-4 items-center">
+          <%= form_with url: edibles_path, method: :get, class: "flex-1", data: { turbo_frame: "edibles", controller: "search" } do |f| %>
+            <div class="relative">
               <%= f.text_field :query,
                   value: params[:query],
                   class: "w-full pl-10 pr-4 py-3 rounded-lg border border-primary-200 focus:ring-2 focus:ring-primary-300 focus:border-primary-300 placeholder-primary-400 bg-white",
@@ -34,6 +34,10 @@
                   data: { action: "input->search#debounce" } %>
               <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-primary-400"></i>
             </div>
+          <% end %>
+          <%= link_to new_edible_path, class: "flex items-center gap-2 bg-primary hover:bg-primary-600 text-white px-4 py-3 rounded-lg transition-colors", data: { turbo_frame: "_top" } do %>
+            <i class="fa-solid fa-plus"></i>
+            <span>Add New Edible</span>
           <% end %>
         </div>
 

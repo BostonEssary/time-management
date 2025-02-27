@@ -1,5 +1,5 @@
-<%= form_with model: flower, class: 'flex flex-col gap-4' do |form| %>
-  <%= render "shared/form_errors", resource: flower %>
+<%= form_with model: pre_roll, class: 'flex flex-col gap-4' do |form| %>
+  <%= render "shared/form_errors", resource: pre_roll %>
 
   <div class='flex flex-col gap-2'>
     <%= form.label :name %>
@@ -9,20 +9,32 @@
   </div>
 
   <div class='flex flex-col gap-2'>
-    <%= form.label :thc, "THC" %>
+    <%= form.label :thc, "THC %" %>
     <%= form.number_field :thc,
                       class: "border-gray-300 border-2 rounded",
-                      placeholder: "Enter the THC percentage" %>
+                      placeholder: "Enter the THC percentage",
+                      step: "0.1",
+                      min: 0,
+                      max: 100 %>
   </div>
 
   <div class='flex flex-col gap-2'>
     <%= form.label :strain %>
     <%= form.collection_select :strain,
-                           Flower::STRAINS,
+                           PreRoll::STRAINS,
                            :to_s,
                            :titleize,
-                           { include_blank: "What is the strain of the flower?" },
+                           { include_blank: "Select the strain type" },
                            class: "border-gray-300 border-2 rounded" %>
+  </div>
+
+  <div class='flex flex-col gap-2'>
+    <%= form.label :infused %>
+    <div class="flex items-center gap-2">
+      <%= form.check_box :infused,
+                     class: "h-4 w-4 text-primary border-gray-300 rounded focus:ring-primary" %>
+      <span class="text-sm text-gray-600">Is this pre-roll infused with concentrates?</span>
+    </div>
   </div>
 
   <div class='flex flex-col gap-2'>
@@ -38,7 +50,7 @@
   </div>
 
   <div class='flex flex-col gap-2'>
-    <%= form.label :images %>
+    <%= form.label :images, "Additional Images" %>
     <%= form.file_field :images, multiple: true %>
   </div>
 
@@ -61,4 +73,4 @@
   </div>
 
   <%= form.submit "Save changes", class: "bg-primary text-primary-50 rounded p-2" %>
-<% end %>
+<% end %> 

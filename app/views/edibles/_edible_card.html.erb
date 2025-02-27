@@ -21,22 +21,12 @@
               </div>
             </div>
           </div>
-          <template data-popover-target="content">
-            <div data-popover-target="card" class="absolute z-10 w-72 bottom-full mb-2 bg-white rounded-md p-2 shadow-lg">
-              <div class="p-3">
-                <h3 class="text-lg font-semibold text-primary mb-3">Latest Review</h3>
-                <div class="flex items-center gap-3 mb-2">
-                  <%= image_tag last_review.user.avatar.variant(:thumb), class: "w-8 h-8 rounded-full" if last_review.user.avatar.attached? %>
-                  <div>
-                    <p class="font-medium"><%= last_review.user.username %></p>
-                    <%= render 'shared/rating', score: last_review.score, text_size: 'text-xs' %>
-                  </div>
-                </div>
-                <p class="text-sm text-gray-600"><%= truncate(last_review.comment, length: 100) %></p>
-              </div>
-            </div>
-          </template>
+          <div data-popover-target="content" class="hidden absolute z-10 w-64 bg-white rounded-lg shadow-lg border border-gray-200 mt-2">
+            <%= render 'edibles/review_popover_content', review: last_review %>
+          </div>
         </div>
+      <% else %>
+        <%= render 'shared/no_reviews_card' %>
       <% end %>
     </div>
     <div class="flex gap-2 text-sm">
@@ -44,7 +34,7 @@
       <span class="bg-primary-50 px-2 py-1 rounded-full"><%= edible.mg_per_serving %>mg/serving</span>
     </div>
   </div>
-  <%= link_to edible_path(edible), class: 'w-full text-center bg-secondary text-white py-2 rounded-lg hover:bg-secondary-600 transition-colors' do %>
+  <%= link_to edible_path(edible), class: 'w-full text-center bg-secondary text-white py-2 rounded-lg hover:bg-secondary-600 transition-colors', data: { turbo_frame: "_top" } do %>
     View Details
     <i class="fa-solid fa-arrow-right ml-1"></i>
   <% end %>

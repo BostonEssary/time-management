@@ -59,7 +59,7 @@ class ConcentratesController < ApplicationController
   end
 
   def concentrate_params
-    params.require(:concentrate).permit(:name, :thc, :strain, :category, :brand_id, :avatar, images: [])
+    params.require(:concentrate).permit(:name, :thc, :strain, :category, :brand_id, :avatar, images: [], effect_ids: [])
   end
 
   def set_concentrate

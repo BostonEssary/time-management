@@ -1,7 +1,7 @@
 <div class='flex flex-col gap-12 p-2 bg-primary-50 rounded-md'>
   <div class='flex flex-col md:flex-row gap-6 flex-1'>
     <div class='flex flex-col gap-4'>
-      <%= image_tag @flower.avatar.variant(:large) %>
+      <%= image_tag @flower.images.first.variant(:large) if @flower.images.attached? %>
       <% if @flower.ratings.any? %>
         <%= render 'shared/rating', score: @flower.ratings.average(:score) %>
       <% end %>
@@ -32,10 +32,12 @@
           <%= effect_pill(effect.name) %>
         <% end %>
       </div>
-      <div class='flex flex-col gap-2'>
-        <p class='font-bold'>Latest Review</p>
-        <%= render 'ratings/rating_card', rating: @flower.latest_review %>
-      </div>
+      <% if @flower.ratings.any? %>
+        <div class='flex flex-col gap-2'>
+          <p class='font-bold'>Latest Review</p>
+          <%= render 'ratings/rating_card', rating: @flower.latest_review %>
+        </div>
+      <% end %>
     </div>
   </div>
   <div class='flex flex-col flex-1 gap-8'>
@@ -45,7 +47,11 @@
   <div>
     <div class='flex flex-col gap-4'>
       <p class='font-bold'>All Reviews</p>
-      <%= render partial: 'ratings/rating_card', collection: @flower.ratings, as: :rating %>
+      <% if @flower.ratings.any? %>
+        <%= render partial: 'ratings/rating_card', collection: @flower.ratings, as: :rating %>
+      <% else %>
+        <%= render 'shared/no_reviews', ratable: @flower %>
+      <% end %>
     </div>
   </div>
 </div>

@@ -59,7 +59,7 @@ class PreRollsController < ApplicationController
   end
 
   def pre_roll_params
-    params.require(:pre_roll).permit(:name, :thc, :strain, :infused, :brand_id, :avatar, images: [])
+    params.require(:pre_roll).permit(:name, :thc, :strain, :infused, :brand_id, :avatar, images: [], effect_ids: [])
   end
 
   def set_pre_roll

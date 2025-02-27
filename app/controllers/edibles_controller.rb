@@ -59,7 +59,8 @@ class EdiblesController < ApplicationController
   end
 
   def edible_params
-    params.require(:edible).permit(:name, :mg_per_serving, :strain, :food_type, :brand_id, :avatar, images: [])
+    params.require(:edible).permit(:name, :mg_per_serving, :strain, :food_type, :brand_id, :avatar, images: [],
+effect_ids: [])
   end
 
   def set_edible

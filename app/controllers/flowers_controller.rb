@@ -83,7 +83,7 @@ class FlowersController < ApplicationController
   private
 
   def flower_params
-    params.require(:flower).permit(:name, :thc, :strain, :brand_id, :avatar, images: [])
+    params.require(:flower).permit(:name, :thc, :strain, :brand_id, :avatar, images: [], effect_ids: [])
   end
 
   def set_flower

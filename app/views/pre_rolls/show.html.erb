@@ -1,7 +1,7 @@
 <div class='flex flex-col gap-12 p-2 bg-primary-50 rounded-md'>
   <div class='flex flex-col md:flex-row gap-6 flex-1'>
     <div class='flex flex-col gap-4'>
-      <%= image_tag @pre_roll.avatar.variant(:large) if @pre_roll.avatar.attached? %>
+      <%= image_tag @pre_roll.images.first.variant(:large) if @pre_roll.images.attached? %>
       <% if @pre_roll.ratings.any? %>
         <%= render 'shared/rating', score: @pre_roll.ratings.average(:score) %>
       <% end %>
@@ -37,10 +37,12 @@
           <%= effect_pill(effect.name) %>
         <% end %>
       </div>
-      <div class='flex flex-col gap-2'>
-        <p class='font-bold'>Latest Review</p>
-        <%= render 'ratings/rating_card', rating: @pre_roll.latest_review if @pre_roll.latest_review %>
-      </div>
+      <% if @pre_roll.ratings.any? %>
+        <div class='flex flex-col gap-2'>
+          <p class='font-bold'>Latest Review</p>
+          <%= render 'ratings/rating_card', rating: @pre_roll.latest_review %>
+        </div>
+      <% end %>
     </div>
   </div>
   <div class='flex flex-col flex-1 gap-8'>
@@ -50,7 +52,11 @@
   <div>
     <div class='flex flex-col gap-4'>
       <p class='font-bold'>All Reviews</p>
-      <%= render partial: 'ratings/rating_card', collection: @pre_roll.ratings, as: :rating %>
+      <% if @pre_roll.ratings.any? %>
+        <%= render partial: 'ratings/rating_card', collection: @pre_roll.ratings, as: :rating %>
+      <% else %>
+        <%= render 'shared/no_reviews', ratable: @pre_roll %>
+      <% end %>
     </div>
   </div>
 </div> 

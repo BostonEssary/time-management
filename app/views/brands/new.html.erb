@@ -1,0 +1,31 @@
+<div class='min-h-screen flex items-center'>
+  <div class='grid md:grid-cols-2 max-w-4xl mx-auto m-2'>
+    <div class='mx-auto max-w-96 md:m-0 md:max-w-none rounded-l-md bg-primary-50 p-4'>
+      <h3 class='text-2xl font-bold mb-4'>Create a new Brand</h3>
+      
+      <%= form_with model: @brand, class: 'flex flex-col gap-4' do |form| %>
+        <%= render "shared/form_errors", resource: @brand %>
+
+        <div class='flex flex-col gap-2'>
+          <%= form.label :name %>
+          <%= form.text_field :name,
+                          class: "border-gray-300 border-2 rounded w-full",
+                          placeholder: "Enter the brand name" %>
+        </div>
+
+        <div class='flex flex-col gap-2'>
+          <%= form.label :avatar, "Brand Logo" %>
+          <%= form.file_field :avatar,
+                          class: "w-full rounded-lg border border-gray-300 file:mr-4 file:py-2 file:px-4 file:border-0 file:text-sm file:font-medium file:bg-primary file:text-white hover:file:bg-primary-dark",
+                          accept: "image/*",
+                          direct_upload: true %>
+        </div>
+
+        <%= form.submit "Create Brand", class: "bg-primary text-primary-50 rounded p-2 w-full hover:bg-primary-dark transition-colors" %>
+      <% end %>
+    </div>
+    <div class='hidden md:block'>
+      <%= image_tag "flower-form.jpg", class: "object-cover h-full w-full rounded-r-md" %>
+    </div>
+  </div>
+</div> 
