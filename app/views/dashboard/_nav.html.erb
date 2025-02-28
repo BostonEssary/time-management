@@ -56,12 +56,11 @@
   </div>
 
   <%# Mobile Menu %>
-  <div class="hidden fixed inset-0 z-50 bg-gray-800/50" data-nav-target="overlay" data-action="click->nav#toggleMobileMenu">
-    <div class="fixed right-0 top-0 h-screen bg-white w-64 shadow-lg transform transition-transform duration-300 ease-in-out">
+    <div data-nav-target="mobileMenu" class="fixed hidden right-0 top-0 h-screen bg-white w-64 shadow-lg transform transition-transform duration-300 ease-in-out">
       <div class="p-6 space-y-6">
         <%# Close Button %>
         <div class="flex justify-end">
-          <button class="text-gray-500 p-2" data-action="nav#toggleMobileMenu">
+          <button class="text-gray-500 p-2" data-action="click->nav#toggleMobileMenu">
             <i class="fa-solid fa-times text-xl"></i>
           </button>
         </div>
@@ -107,5 +106,4 @@
         </div>
       </div>
     </div>
-  </div>
 </div>

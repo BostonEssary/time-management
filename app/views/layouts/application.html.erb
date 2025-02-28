@@ -24,8 +24,9 @@
       min-h-screen h-screen flex flex-col bg-primary max-w-screen-xl mx-auto
     '
   >
-    <%= render "dashboard/nav" %>
-    <main class='flex-1 relative md:mt-0 mt-14'>
+    
+    <main class='flex-1 relative'>
+      <%= render "dashboard/nav" %>
       <%= render "shared/flash" %>
       <%= yield %>
     </main>

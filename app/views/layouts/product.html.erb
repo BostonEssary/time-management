@@ -24,8 +24,9 @@
       min-h-screen h-screen flex flex-col bg-primary max-w-screen-xl mx-auto
     '
   >
-    <%= render "dashboard/nav" %>
+    
     <main class='flex-1 relative bg-primary-50'>
+      <%= render "dashboard/nav" %>
       <%= render "shared/flash" %>
       <%= yield %>
       <div class='sticky bottom-0 flex justify-end p-8'>

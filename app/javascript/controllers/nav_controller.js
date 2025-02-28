@@ -9,7 +9,6 @@ export default class extends Controller {
   }
 
   toggleMobileMenu() {
-    this.overlayTarget.classList.toggle('hidden')
-    document.body.classList.toggle('overflow-hidden')
+    this.mobileMenuTarget.classList.toggle('hidden')
   }
 }
