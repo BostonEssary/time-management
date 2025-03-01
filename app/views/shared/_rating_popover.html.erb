@@ -1,0 +1,17 @@
+ 
+<div data-controller="popover" data-popover-position-value="top" class="w-fit relative">
+  <div data-action="mouseenter->popover#show mouseleave->popover#hide touchstart->popover#toggle">
+    <div class='flex gap-2 items-center cursor-pointer group bg-primary-50 rounded-lg px-3 py-2 transition-colors hover:bg-primary-100'>
+      <div class='text-xs'>
+        <%= render 'shared/rating', score: product.average_score, text_size: 'text-xs' %>
+        <div class="flex items-center gap-1">
+          <p><%= product.ratings_count %> reviews</p>
+          <i class="fa-solid fa-circle-info text-primary-400 group-hover:text-primary transition-colors" title="Click or hover to see the latest review"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div data-popover-target="content" class="hidden absolute z-10 w-64 bg-white rounded-lg shadow-lg border border-gray-200 mt-2">
+    <%= render 'pre_rolls/review_popover_content', review: product.ratings.last %>
+  </div>
+</div>

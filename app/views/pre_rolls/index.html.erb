@@ -111,7 +111,8 @@
 
     <div class="bg-white rounded-xl shadow-lg p-6">
       <turbo-frame id="pre_rolls" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 justify-items-center">
-        <%= render partial: "pre_rolls/pre_roll_card", collection: @pre_rolls, as: :pre_roll %>
+        <%= render partial: "shared/product_card", collection: @pre_rolls, as: :product, locals: { path_helper: :pre_roll_path, 
+                                                                                                   display_options: { show_infused: true } } %> 
       </turbo-frame>
 
       <div class="mt-8 flex justify-center">
