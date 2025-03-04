@@ -39,13 +39,7 @@
         </div>
 
         <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pt-4 border-t border-primary-100">
-          <div class="flex flex-wrap gap-2">
-            <span class="text-primary-700 font-medium py-2">Strain Type:</span>
-            <%= link_to "All", flowers_path(sort: params[:sort], query: params[:query]), class: "px-4 py-2 rounded-full #{params[:filter].blank? ? 'bg-primary text-white' : 'bg-primary-50 text-primary hover:bg-primary-100'}" %>
-            <%= link_to "Sativa", flowers_path(filter: 'sativa', sort: params[:sort], query: params[:query]), class: "px-4 py-2 rounded-full #{params[:filter] == 'sativa' ? 'bg-primary text-white' : 'bg-primary-50 text-primary hover:bg-primary-100'}", data: { turbo_frame: "flowers" } %>
-            <%= link_to "Indica", flowers_path(filter: 'indica', sort: params[:sort], query: params[:query]), class: "px-4 py-2 rounded-full #{params[:filter] == 'indica' ? 'bg-primary text-white' : 'bg-primary-50 text-primary hover:bg-primary-100'}", data: { turbo_frame: "flowers" } %>
-            <%= link_to "Hybrid", flowers_path(filter: 'hybrid', sort: params[:sort], query: params[:query]), class: "px-4 py-2 rounded-full #{params[:filter] == 'hybrid' ? 'bg-primary text-white' : 'bg-primary-50 text-primary hover:bg-primary-100'}", data: { turbo_frame: "flowers" } %>
-          </div>
+          <%= render partial: "shared/strain_selector", locals: { model: Flower, frame: "flowers" } %>
           
           <div class="w-full sm:w-auto">
             <%= form_with url: flowers_path, method: :get, class: "flex items-center gap-2", data: { turbo_frame: "flowers", controller: "auto-submit" } do |f| %>
