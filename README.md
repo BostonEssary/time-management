@@ -1,24 +1,9 @@
-# README
+This is a work in progress. 
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+The goal is to have a social media rating application, similar to Untapped, but for cannabis products
 
-Things you may want to cover:
+You can see where the app us at [here](https://safe-river-22544-4bf23334c1d4.herokuapp.com/)
 
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+Login Credentials
+Email: test@test.com
+Password: password
