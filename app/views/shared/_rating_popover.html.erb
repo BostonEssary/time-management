@@ -1,0 +1,22 @@
+<%# locals: (product:) %>
+<div data-controller="popover" data-popover-position-value="bottom" class="w-fit relative ">
+  <div class="cursor-pointer bg-primary-50 rounded-md p-2" data-action="mouseenter->popover#show mouseleave->popover#hide touchstart->popover#toggle">
+    <%= render 'shared/rating', score: product.average_score, text_size: 'text-xs' %>
+    <div class="flex items-center gap-1">
+      <p><%= product.ratings_count %> reviews</p>
+      <i class="fa-solid fa-circle-info text-primary-400 group-hover:text-primary transition-colors" title="Click or hover to see the latest review"></i>
+    </div>
+  </div>
+  <template data-popover-target="content" >
+    <div data-popover-target="card" class="absolute z-10 w-72 max-w-[90vw] top-full bg-white rounded-md p-2 shadow-lg text-sm text-black">
+      <div class="flex items-center gap-3 mb-2">
+        <%= image_tag product.latest_review.user.avatar.variant(:thumb), class: "w-8 h-8 rounded-full" if product.latest_review.user.avatar.attached? %>
+        <div>
+          <p class="font-medium"><%= product.latest_review.user.username %></p>
+          <%= render 'shared/rating', score: product.latest_review.score, text_size: 'text-xs' %>
+        </div>
+      </div>
+      <p class="text-sm text-gray-600"><%= truncate(product.latest_review.comment, length: 100) %></p>
+    </div>
+  </template>
+</div>

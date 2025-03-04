@@ -1,11 +1,11 @@
-<%# locals: (label:, classes: nil, content_classes: nil) %>
+<%# locals: (product:) %>
 <div data-controller="popover" data-popover-position-value="bottom" class="w-fit relative ">
-  <div class="<%= classes %>" data-action="mouseenter->popover#show mouseleave->popover#hide touchstart->popover#toggle">
-    <%= label %>
+  <div class="cursor-pointer bg-primary text-white text-sm rounded-full p-2" data-action="mouseenter->popover#show mouseleave->popover#hide touchstart->popover#toggle">
+    <%= product.strain.capitalize %>
   </div>
   <template data-popover-target="content" >
     <div data-popover-target="card" class="absolute z-10 w-96 max-w-[90vw] top-full bg-white rounded-md p-2 shadow-lg text-sm text-black">
-      <%= yield %>
+      <%= product.strain_effects %>
     </div>
   </template>
 </div> 

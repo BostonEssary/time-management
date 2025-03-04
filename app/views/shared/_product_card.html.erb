@@ -1,0 +1,39 @@
+<%# locals: (product:, path_helper:, display_options: { show_infused: false }) %>
+<div class='flex flex-col gap-4 justify-between bg-white border border-primary-100 shadow-sm w-72 p-4 rounded-lg hover:shadow-md transition-shadow'>
+  <div class='flex flex-col gap-2'>
+    <%= image_tag product.images.sample.variant(:thumb) if product.images.attached? %>
+    <div class='flex items-center gap-2'>
+      <h2 class='text-lg font-bold'><%= product.name %></h2>
+      <div class='flex text-xs text-white bg-primary rounded-full p-3 w-4 h-4 items-center justify-center'>
+        <p><%= product.strain.capitalize.first %></p>
+      </div>
+    </div>
+    <div class='flex'>
+      <% if product.ratings.any? %>
+        <%= render 'shared/rating_popover', product: product %>
+      <% else %>
+        <%= render 'shared/no_reviews_card' %>
+      <% end %>
+    </div>
+  </div>
+  <div class="flex gap-2 text-sm">
+    <% if product.is_a?(Edible) %>
+      <span class="bg-primary-50 px-2 py-1 rounded-full"><%= product.food_type %></span>
+      <span class="bg-primary-50 px-2 py-1 rounded-full"><%= product.mg_per_serving %>mg/serving</span>
+    <% elsif product.is_a?(Concentrate) %>
+      <span class="bg-primary-50 px-2 py-1 rounded-full"><%= product.category %></span>
+      <span class="bg-primary-50 px-2 py-1 rounded-full"><%= product.thc %>% THC</span>
+    <% else %>
+      <span class="bg-primary-50 px-2 py-1 rounded-full"><%= product.thc %>% THC</span>
+      <% if display_options[:show_infused] && product.respond_to?(:infused) %>
+        <% if product.infused %>
+          <span class="bg-primary-50 px-2 py-1 rounded-full">Infused</span>
+        <% end %>
+      <% end %>
+    <% end %>
+  </div>
+  <%= link_to send(path_helper, product), class: 'w-full text-center bg-secondary text-white py-2 rounded-lg hover:bg-secondary-600 transition-colors', data: { turbo_frame: "_top" } do %>
+    View Details
+    <i class="fa-solid fa-arrow-right ml-1"></i>
+  <% end %>
+</div> 

@@ -13,7 +13,7 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "posts#index"
-  root "dashboard#show"
+  root "flowers#index"
 
   concern :searchable do
     get :search, on: :collection

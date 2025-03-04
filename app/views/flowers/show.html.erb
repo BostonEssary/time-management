@@ -13,14 +13,8 @@
           <%= link_to @flower.brand.name, brand_path(@flower.brand), class: 'font-light' %>
         </div>
         <div class='flex gap-2'>
-          <%= render layout: 'shared/popover' do %>
-            <div class='flex gap-2 items-center cursor-pointer bg-primary text-white text-sm rounded-full p-2'>
-              <p><%= @flower.strain.capitalize %></p>
-            </div>
-            <% content_for :content do %>
-              <p><%= @flower.strain_effects %></p>
-            <% end %>
-          <% end %>
+          <%= render 'shared/strain_popover', product: @flower %>
+          
           <div class='flex gap-1 text-sm text-white bg-primary rounded-full p-2 w-fit'>
             <p><%= @flower.thc %>%</p>
             <p>THC</p>

@@ -13,14 +13,7 @@
           <%= link_to @edible.brand.name, brand_path(@edible.brand), class: 'font-light' %>
         </div>
         <div class='flex gap-2'>
-          <%= render layout: 'shared/popover' do %>
-            <div class='flex gap-2 items-center cursor-pointer bg-primary text-white text-sm rounded-full p-2'>
-              <p><%= @edible.strain.capitalize %></p>
-            </div>
-            <% content_for :content do %>
-              <p><%= @edible.strain_effects %></p>
-            <% end %>
-          <% end %>
+          <%= render 'shared/strain_popover', product: @edible %>
           <div class='flex gap-2 text-sm text-white bg-primary rounded-full p-2 w-fit'>
             <p><%= @edible.mg_per_serving %>mg</p>
             <p>per serving</p>

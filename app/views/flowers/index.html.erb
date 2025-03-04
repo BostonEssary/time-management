@@ -12,12 +12,9 @@
     </div>
   </div>
 
-  <%# Main Content %>
   <div class="container mx-auto px-4 -mt-8 pb-12">
-    <%# Filters Section %>
     <div class="mb-8 bg-white rounded-xl shadow-lg p-6 relative z-10">
       <div class="flex flex-col gap-6">
-        <%# Title and Description %>
         <div>
           <h2 class="text-lg font-semibold text-primary-900">Search & Filter</h2>
           <p class="text-sm text-primary-600">Find the perfect product for your needs</p>
@@ -41,15 +38,8 @@
           <% end %>
         </div>
 
-        <%# Filters Row %>
         <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pt-4 border-t border-primary-100">
-          <div class="flex flex-wrap gap-2">
-            <span class="text-primary-700 font-medium py-2">Strain Type:</span>
-            <%= link_to "All", flowers_path(sort: params[:sort], query: params[:query]), class: "px-4 py-2 rounded-full #{params[:filter].blank? ? 'bg-primary text-white' : 'bg-primary-50 text-primary hover:bg-primary-100'}" %>
-            <%= link_to "Sativa", flowers_path(filter: 'sativa', sort: params[:sort], query: params[:query]), class: "px-4 py-2 rounded-full #{params[:filter] == 'sativa' ? 'bg-primary text-white' : 'bg-primary-50 text-primary hover:bg-primary-100'}" %>
-            <%= link_to "Indica", flowers_path(filter: 'indica', sort: params[:sort], query: params[:query]), class: "px-4 py-2 rounded-full #{params[:filter] == 'indica' ? 'bg-primary text-white' : 'bg-primary-50 text-primary hover:bg-primary-100'}" %>
-            <%= link_to "Hybrid", flowers_path(filter: 'hybrid', sort: params[:sort], query: params[:query]), class: "px-4 py-2 rounded-full #{params[:filter] == 'hybrid' ? 'bg-primary text-white' : 'bg-primary-50 text-primary hover:bg-primary-100'}" %>
-          </div>
+          <%= render partial: "shared/strain_selector", locals: { model: Flower, frame: "flowers" } %>
           
           <div class="w-full sm:w-auto">
             <%= form_with url: flowers_path, method: :get, class: "flex items-center gap-2", data: { turbo_frame: "flowers", controller: "auto-submit" } do |f| %>
@@ -75,7 +65,6 @@
           </div>
         </div>
 
-        <%# Active Filters Display %>
         <% if params[:filter].present? || params[:sort].present? || params[:query].present? %>
           <div class="flex flex-wrap items-center gap-2 pt-2 border-t border-primary-100">
             <span class="text-sm text-primary-600">Active filters:</span>
@@ -102,19 +91,20 @@
       </div>
     </div>
 
-    <%# Products Grid %>
     <div class="bg-white rounded-xl shadow-lg p-6">
-      <turbo-frame id="flowers" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 justify-items-center">
-        <%= render partial: "flowers/flower_card", collection: @flowers, as: :flower %>
+      <turbo-frame id="flowers">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 justify-items-center">
+          <%= render partial: "shared/product_card", collection: @flowers, as: :product, locals: { path_helper: :flower_path } %>
+        </div>
+        <div class="mt-8 flex justify-center">
+          <%= paginate @flowers %>
+        </div>
       </turbo-frame>
 
-      <%# Pagination %>
-      <div class="mt-8 flex justify-center">
-        <%= paginate @flowers %>
-      </div>
+      
+      
     </div>
 
-    <%# Empty State %>
     <% if @flowers.empty? %>
       <div class="text-center py-12">
         <div class="mb-4">
