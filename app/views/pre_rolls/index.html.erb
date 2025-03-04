@@ -18,7 +18,6 @@
           <p class="text-sm text-primary-600">Find the perfect pre-roll for your needs</p>
         </div>
 
-        <%# Search Bar %>
         <div class="max-w-2xl flex gap-4 items-center">
           <%= form_with url: pre_rolls_path, method: :get, class: "flex-1", data: { turbo_frame: "pre_rolls", controller: "search" } do |f| %>
             <div class="relative">
@@ -37,13 +36,7 @@
         </div>
 
         <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pt-4 border-t border-primary-100">
-          <div class="flex flex-wrap gap-2">
-            <span class="text-primary-700 font-medium py-2">Strain Type:</span>
-            <%= link_to "All", pre_rolls_path(sort: params[:sort], query: params[:query], infused: params[:infused]), class: "px-4 py-2 rounded-full #{params[:filter].blank? ? 'bg-primary text-white' : 'bg-primary-50 text-primary hover:bg-primary-100'}" %>
-            <%= link_to "Sativa", pre_rolls_path(filter: 'sativa', sort: params[:sort], query: params[:query], infused: params[:infused]), class: "px-4 py-2 rounded-full #{params[:filter] == 'sativa' ? 'bg-primary text-white' : 'bg-primary-50 text-primary hover:bg-primary-100'}" %>
-            <%= link_to "Indica", pre_rolls_path(filter: 'indica', sort: params[:sort], query: params[:query], infused: params[:infused]), class: "px-4 py-2 rounded-full #{params[:filter] == 'indica' ? 'bg-primary text-white' : 'bg-primary-50 text-primary hover:bg-primary-100'}" %>
-            <%= link_to "Hybrid", pre_rolls_path(filter: 'hybrid', sort: params[:sort], query: params[:query], infused: params[:infused]), class: "px-4 py-2 rounded-full #{params[:filter] == 'hybrid' ? 'bg-primary text-white' : 'bg-primary-50 text-primary hover:bg-primary-100'}" %>
-          </div>
+          <%= render partial: "shared/strain_selector", locals: { model: PreRoll, frame: "pre_rolls" } %>
 
           <div class="flex flex-wrap gap-2">
             <span class="text-primary-700 font-medium py-2">Type:</span>
@@ -110,14 +103,14 @@
     </div>
 
     <div class="bg-white rounded-xl shadow-lg p-6">
-      <turbo-frame id="pre_rolls" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 justify-items-center">
-        <%= render partial: "shared/product_card", collection: @pre_rolls, as: :product, locals: { path_helper: :pre_roll_path, 
-                                                                                                   display_options: { show_infused: true } } %> 
+      <turbo-frame id="pre_rolls">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 justify-items-center">
+          <%= render partial: "shared/product_card", collection: @pre_rolls, as: :product, locals: { path_helper: :pre_roll_path, display_options: { show_infused: true } } %> 
+        </div>
+        <div class="mt-8 flex justify-center">
+          <%= paginate @pre_rolls %>
+        </div>
       </turbo-frame>
-
-      <div class="mt-8 flex justify-center">
-        <%= paginate @pre_rolls %>
-      </div>
     </div>
 
     <% if @pre_rolls.empty? %>
