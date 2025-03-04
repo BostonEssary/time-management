@@ -17,10 +17,18 @@
     </div>
   </div>
   <div class="flex gap-2 text-sm">
-    <span class="bg-primary-50 px-2 py-1 rounded-full"><%= product.thc %>% THC</span>
-    <% if display_options[:show_infused] %>
-      <% if product.infused %>
-        <span class="bg-primary-50 px-2 py-1 rounded-full">Infused</span>
+    <% if product.is_a?(Edible) %>
+      <span class="bg-primary-50 px-2 py-1 rounded-full"><%= product.food_type %></span>
+      <span class="bg-primary-50 px-2 py-1 rounded-full"><%= product.mg_per_serving %>mg/serving</span>
+    <% elsif product.is_a?(Concentrate) %>
+      <span class="bg-primary-50 px-2 py-1 rounded-full"><%= product.category %></span>
+      <span class="bg-primary-50 px-2 py-1 rounded-full"><%= product.thc %>% THC</span>
+    <% else %>
+      <span class="bg-primary-50 px-2 py-1 rounded-full"><%= product.thc %>% THC</span>
+      <% if display_options[:show_infused] && product.respond_to?(:infused) %>
+        <% if product.infused %>
+          <span class="bg-primary-50 px-2 py-1 rounded-full">Infused</span>
+        <% end %>
       <% end %>
     <% end %>
   </div>
