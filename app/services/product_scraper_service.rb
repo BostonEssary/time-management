@@ -3,18 +3,18 @@ class ProductScraperService
     @base_url = "https://www.leafly.com"
   end
 
-  def get_pre_roll_product_links
-    url = "https://www.leafly.com/products/cannabis/prerolls"
-    identifier = '[data-testid="product-card-horizontal"]'
-    product_links = []
-
-    response = Net::HTTP.get(URI(url))
+  def get_product_page(link)
+    response = Net::HTTP.get(URI(link))
     doc = Nokogiri::HTML(response)
-    doc.css(identifier).each do |pre_roll|
-      product_links << @base_url + pre_roll.css("a").attr("href").value
-    end
+    doc.css("#__next")
+    product_details = {}
 
-    product_links
+    product_details[:name] = doc.css('[class="Text-sc-e03b5ed0-0 hpOOZX"]').text
+    product_details[:brand_details] = doc.css('[id="radix-:R56bimmm:"]').text
+    product_details[:product_details] = doc.css('[id="radix-:R4mbimmm:"]').text
+    product_details[:thc] = doc.css('[class="Text-sc-e03b5ed0-0 hpOOZX"]').text
+
+    product_details
   end
 
   def get_product_details(url)
