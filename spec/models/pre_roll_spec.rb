@@ -22,5 +22,9 @@
 require 'rails_helper'
 
 RSpec.describe PreRoll, type: :model do
-  it_behaves_like 'cannabis_product'
+  subject(:pre_roll) { build(:pre_roll) }
+
+  describe 'included concerns' do
+    it_behaves_like 'cannabis_product', additional_attrs: { infused: [ true, false ].sample, thc: 23 }
+  end
 end

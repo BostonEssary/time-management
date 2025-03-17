@@ -22,5 +22,9 @@
 require 'rails_helper'
 
 RSpec.describe Flower, type: :model do
-  it_behaves_like "cannabis_product"
+  subject(:flower) { build(:flower) }
+
+  describe 'included concerns' do
+    it_behaves_like "cannabis_product", additional_attrs: { thc: 24 }
+  end
 end

@@ -5,12 +5,6 @@ FactoryBot.define do
     strain { Flower::STRAINS.sample }
 
     after(:build) do |flower|
-      flower.avatar.attach(
-        io: File.open(Rails.root.join('spec', 'fixtures', 'files', 'test_image.jpg')),
-        filename: 'test_image.jpg',
-        content_type: 'image/jpeg'
-      )
-
       flower.images.attach(
         io: File.open(Rails.root.join('spec', 'fixtures', 'files', 'test_image.jpg')),
         filename: 'test_image.jpg',

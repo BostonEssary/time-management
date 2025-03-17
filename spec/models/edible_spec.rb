@@ -22,5 +22,9 @@
 require 'rails_helper'
 
 RSpec.describe Edible, type: :model do
-  it_behaves_like 'cannabis_product'
+  subject(:edible) { build(:edible) }
+
+  describe 'included concerns' do
+    it_behaves_like 'cannabis_product', additional_attrs: { mg_per_serving: 10, food_type: Edible::FOOD_TYPES.sample }
+  end
 end
