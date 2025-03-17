@@ -7,7 +7,6 @@ RSpec.describe CannabisProduct do
    let!(:dummy) { Dummy.new(brand_id: brand.id,
                             name: 'Wow',
                             strain: 'indica',
-                            avatar: test_image,
                             images: [ test_image ]) }
 
 
@@ -37,7 +36,6 @@ RSpec.describe CannabisProduct do
        let(:dummy1) { Dummy.new(brand_id: brand.id,
                                 name: 'Wow',
                                 strain: 'indica',
-                                avatar: test_image,
                                 images: [ test_image ]) }
        it 'is invalid' do
           dummy.save

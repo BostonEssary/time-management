@@ -20,7 +20,17 @@
 #  fk_rails_...  (brand_id => brands.id)
 #
 FactoryBot.define do
-  factory :flower, parent: :cannabis_product do
+  factory :flower do
+    name { Faker::Lorem.word }
+    strain { CannabisProduct::STRAINS.sample }
     thc { Faker::Number.between(from: 10.0, to: 35.0).round(1) }
+    brand
+    after(:build) do |flower|
+      flower.images.attach(
+        io: File.open(Rails.root.join('spec', 'fixtures', 'files', 'test_image.jpg')),
+        filename: 'test_image.jpg',
+        content_type: 'image/jpeg'
+      )
+    end
   end
 end

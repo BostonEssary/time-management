@@ -20,8 +20,22 @@
 #  fk_rails_...  (brand_id => brands.id)
 #
 FactoryBot.define do
-  factory :concentrate, parent: :cannabis_product, class: 'Concentrate' do
-    category { Concentrate::CATEGORIES.sample }
-    thc { 1.5 }
+    factory :concentrate do
+        brand
+        name { Faker::Lorem.word }
+        strain { CannabisProduct::STRAINS.sample }
+        thc { Faker::Number.between(from: 10.0, to: 35.0).round(1) }
+        category { Concentrate::CATEGORIES.sample }
+        images {
+            [ Rack::Test::UploadedFile.new(Rails.root.join('spec', 'fixtures', 'files', 'test_image.jpg'),
+                                           'image/jpeg') ]
+          }
+        after(:build) do |concentrate|
+          concentrate.images.attach(
+            io: File.open(Rails.root.join('spec', 'fixtures', 'files', 'test_image.jpg')),
+            filename: 'test_image.jpg',
+            content_type: 'image/jpeg'
+          )
+        end
+      end
   end
-end

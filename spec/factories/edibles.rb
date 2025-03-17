@@ -21,10 +21,19 @@
 #
 FactoryBot.define do
   factory :edible do
-    name { "MyString" }
-    strain { "MyString" }
-    mg_per_serving { 1 }
-    brand { nil }
-    food_type { "MyString" }
+    brand
+    name { Faker::Lorem.word }
+    strain { CannabisProduct::STRAINS.sample }
+    mg_per_serving { Faker::Number.between(from: 10, to: 100) }
+    food_type { Edible::FOOD_TYPES.sample }
+    images {
+      [ Rack::Test::UploadedFile.new(Rails.root.join('spec', 'fixtures', 'files', 'test_image.jpg'), 'image/jpeg') ] }
+    after(:build) do |edible|
+      edible.images.attach(
+        io: File.open(Rails.root.join('spec', 'fixtures', 'files', 'test_image.jpg')),
+        filename: 'test_image.jpg',
+        content_type: 'image/jpeg'
+      )
+    end
   end
 end
