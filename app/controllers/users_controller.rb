@@ -13,6 +13,8 @@ class UsersController < ApplicationController
   end
 
   def following
+    return if current_user.nil?
+
     @following = Follow.find_by(follower_id: current_user.id, followee_id: params[:id])
   end
 end

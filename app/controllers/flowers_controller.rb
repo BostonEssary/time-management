@@ -1,8 +1,9 @@
-class FlowersController < ApplicationController
+class FlowersController < AuthenticatedController
   include Ratable
 
   layout "product", only: [ :show ]
   before_action :set_flower, only: [ :show ]
+  before_action :authenticate_user, only: [ :new, :create ]
 
   def index
     @flowers = Flower.includes(ratings: :user)

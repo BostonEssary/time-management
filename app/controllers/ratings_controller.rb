@@ -1,4 +1,4 @@
-class RatingsController < ApplicationController
+class RatingsController < AuthenticatedController
   before_action :set_ratable, only: [ :new ]
 
   def create

@@ -43,4 +43,8 @@ module CannabisProduct
   def latest_review
     ratings.last
   end
+
+  def ratings_by_date
+    ratings.order(created_at: :desc)
+  end
 end

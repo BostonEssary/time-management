@@ -1,11 +1,11 @@
-<% if current_user.id == user.id %>
+<% if current_user == user %>
   <%= link_to edit_profile_path  do %>
     <i class="fa-solid fa-pen-to-square"></i>
   <% end %>
 <% end %>
-<% unless current_user.id == user.id %>
+<% unless current_user == user %>
   <% if following %>
-    <%= button_to follow_path(following.id), class: "bg-secondary-200 rounded-md p-1", method: :delete do %>
+    <%= button_to follow_path(following), class: "bg-secondary-200 rounded-md p-1", method: :delete do %>
       <div>
         <p>Unfollow</p>
       </div>

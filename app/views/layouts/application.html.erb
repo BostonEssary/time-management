@@ -28,6 +28,8 @@
     <main class='flex-1 relative'>
       <%= render "dashboard/nav" %>
       <%= render "shared/flash" %>
+      <div id='modal' data-controller='modal' data-modal-target='modal'>
+      </div>
       <%= yield %>
     </main>
   </body>

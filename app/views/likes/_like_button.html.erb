@@ -17,10 +17,11 @@
       <% end %>
     <% end %>
   <% else %>
-    <%= link_to new_user_session_path,
-        class: "flex items-center gap-1 text-gray-400 hover:text-primary transition-colors" do %>
+    <%= button_to polymorphic_path([likeable, :like]),
+          method: :post,
+          class: "flex items-center gap-1 text-gray-400 hover:text-primary transition-colors" do %>
       <i class="fa-regular fa-heart"></i>
       <span class="text-sm"><%= likeable.likes.count %></span>
     <% end %>
   <% end %>
-</div> 
+</div>

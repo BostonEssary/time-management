@@ -42,7 +42,7 @@
     <div class='flex flex-col gap-4'>
       <p class='font-bold'>All Reviews</p>
       <% if @flower.ratings.any? %>
-        <%= render partial: 'ratings/rating_card', collection: @flower.ratings, as: :rating %>
+        <%= render partial: 'ratings/rating_card', collection: @flower.ratings_by_date, as: :rating %>
       <% else %>
         <%= render 'shared/no_reviews', ratable: @flower %>
       <% end %>

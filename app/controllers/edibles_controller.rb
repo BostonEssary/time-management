@@ -1,9 +1,9 @@
-class EdiblesController < ApplicationController
+class EdiblesController < AuthenticatedController
   include Ratable
 
   layout "product", only: [ :show ]
   before_action :set_edible, only: [ :show ]
-
+  before_action :authenticate_user, only: [ :new, :create ]
   def index
     @edibles = fetch_filtered_edibles
     @last_reviews = Edible.fetch_last_reviews(@edibles)

@@ -1,0 +1,11 @@
+<div class="fixed top-0 left-0 w-full h-full flex items-center justify-center z-50">
+  <div class="bg-white p-4 rounded-md flex flex-col gap-4 items-center justify-center z-50">
+    <p>You need to be logged in to do that!</p>
+    <div class='flex gap-2'>
+      <%= link_to 'Login', new_user_session_path, class: 'bg-primary text-white p-2 rounded-md', data: { action: 'click->modal#close' } %>
+      <%= link_to 'Sign up', new_user_registration_path, class: 'bg-secondary text-white p-2 rounded-md', data: { action: 'click->modal#close' } %>
+    </div>
+  </div>
+  <div data-modal-target='overlay' class='absolute top-0 left-0 w-full h-full bg-black bg-opacity-50 z-40' data-action='click->modal#close'>
+  </div>
+</div>

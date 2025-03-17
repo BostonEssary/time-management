@@ -1,5 +1,4 @@
-class LikesController < ApplicationController
-  before_action :authenticate_user!
+class LikesController < AuthenticatedController
   before_action :set_likeable
 
   def create

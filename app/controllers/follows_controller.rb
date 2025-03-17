@@ -1,4 +1,4 @@
-class FollowsController < ApplicationController
+class FollowsController < AuthenticatedController
   before_action :set_user, only: :create
   before_action :set_follow, only: :destroy
 

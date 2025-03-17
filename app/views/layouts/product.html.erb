@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+  <!DOCTYPE html>
 <html>
   <head>
     <title><%= content_for(:title) || "Time Management" %></title>
@@ -6,9 +6,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-
     <%= yield :head %>
-
     <link rel="manifest" href="/manifest.json">
     <link rel="icon" href="/icon.png" type="image/png">
     <link rel="icon" href="/icon.svg" type="image/svg+xml">
@@ -18,19 +16,21 @@
     <%= javascript_importmap_tags %>
     <script src="https://kit.fontawesome.com/d89ddd3e98.js" crossorigin="anonymous"></script>
   </head>
-
   <body
     class='
       min-h-screen h-screen flex flex-col bg-primary max-w-screen-xl mx-auto
     '
   >
-    
     <main class='flex-1 relative bg-primary-50'>
       <%= render "dashboard/nav" %>
       <%= render "shared/flash" %>
+      <div id='modal' data-controller='modal' data-modal-target='modal'>
+      </div>
       <%= yield %>
       <div class='sticky bottom-0 flex justify-end p-8'>
-        <%= link_to new_rating_path(ratable_id: @ratable.id, ratable_type: @ratable.class.name), class: 'bg-primary text-white w-16 h-16 rounded-full flex items-center justify-center', data: { turbo_frame: 'new_rating' } do %>
+        <%= link_to new_rating_path(ratable_id: @ratable.id, ratable_type: @ratable.class.name), 
+        class: 'bg-primary text-white w-16 h-16 rounded-full flex items-center justify-center', 
+        data: { turbo_frame: 'new_rating', turbo_stream: true } do %>
           <i class="fa-solid fa-plus"></i>
         <% end %>
       </div>

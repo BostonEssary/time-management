@@ -1,9 +1,9 @@
-class ConcentratesController < ApplicationController
+class ConcentratesController < AuthenticatedController
   include Ratable
 
   layout "product", only: [ :show ]
   before_action :set_concentrate, only: [ :show ]
-
+  before_action :authenticate_user, only: [ :new, :create ]
   def index
     @concentrates = fetch_filtered_concentrates
     @last_reviews = Concentrate.fetch_last_reviews(@concentrates)
