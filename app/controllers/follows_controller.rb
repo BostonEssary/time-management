@@ -28,7 +28,7 @@ class FollowsController < AuthenticatedController
 
     if @user.nil?
       flash[:alert] = "User not found"
-      render "dashboard/index", status: :unprocessable_entity
+      redirect_to user_path(current_user), status: :unprocessable_entity
     end
   end
 
@@ -37,7 +37,7 @@ class FollowsController < AuthenticatedController
 
     if @follow.nil?
       flash[:alert] = "Follow could not be found"
-      render "dashboard/index", status: :unprocessable_entity
+      redirect_to user_path(current_user), status: :unprocessable_entity
     end
   end
 

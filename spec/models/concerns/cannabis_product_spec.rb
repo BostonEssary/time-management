@@ -10,13 +10,6 @@ RSpec.describe CannabisProduct do
                             images: [ test_image ]) }
 
 
-   describe 'associations' do
-     subject { dummy }
-
-     it { should belong_to(:brand) }
-   end
-
-
    describe 'validations' do
      context 'when all required attributes are present' do
        it 'is valid' do

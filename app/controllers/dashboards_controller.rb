@@ -1,4 +1,4 @@
-class DashboardController < ApplicationController
+class DashboardsController < AuthenticatedController
   def show
     @ratings = Rating.includes(:user, :ratable, :likes, image_attachment: :blob)
                     .where(user: current_user.followees)

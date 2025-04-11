@@ -21,9 +21,9 @@ RSpec.describe "Users", type: :request do
           sign_out user
         end
 
-        it 'redirects the user to the sign in page' do
+        it 'shows the user page' do
           get user_path(user.id)
-          expect(response).to have_http_status(302)
+          expect(response).to have_http_status(:success)
         end
       end
     end

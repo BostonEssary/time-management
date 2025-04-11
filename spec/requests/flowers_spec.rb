@@ -52,7 +52,7 @@ RSpec.describe "Flowers", type: :request do
 
       it "returns http redirect" do
         get "/flowers/new"
-        expect(response).to have_http_status(:unauthorized)
+        expect(response).to redirect_to(user_session_path)
       end
     end
   end
