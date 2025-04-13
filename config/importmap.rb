@@ -10,3 +10,6 @@ pin "swiper/element/bundle", to: "https://cdn.jsdelivr.net/npm/swiper@11.2.1/swi
 pin "@stimulus-components/carousel", to: "@stimulus-components--carousel.js" # @6.0.0
 pin "swiper/bundle", to: "swiper--bundle.js" # @11.2.2
 pin "@stimulus-components/popover", to: "@stimulus-components--popover.js" # @7.0.0
+pin "@stimulus-components/character-counter", to: "@stimulus-components--character-counter.js" # @5.0.0
+pin "@stimulus-components/dropdown", to: "@stimulus-components--dropdown.js" # @3.0.0
+pin "stimulus-use" # @0.52.3
