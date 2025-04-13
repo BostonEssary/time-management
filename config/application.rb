@@ -1,6 +1,7 @@
 require_relative "boot"
 
 require "rails/all"
+require "ruby_llm"
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
@@ -25,4 +26,11 @@ module TimeManagement
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
   end
+end
+
+RubyLLM.configure do |config|
+  config.anthropic_api_key = Rails.application.credentials.dig(:anthropic, :api_key)
+  config.gemini_api_key = Rails.application.credentials.dig(:gemini, :api_key)
+  config.default_model = 'claude-3-5-sonnet-20240620'
+  config.default_embedding_model = 'gemini-embedding-exp-03-07'
 end

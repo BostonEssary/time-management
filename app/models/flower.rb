@@ -3,6 +3,7 @@
 # Table name: flowers
 #
 #  id         :bigint           not null, primary key
+#  embedding  :vector
 #  name       :string
 #  strain     :string
 #  thc        :float
@@ -22,8 +23,19 @@
 class Flower < ApplicationRecord
   include CannabisProduct
 
+  has_neighbors :embedding
   has_many :ratings, as: :ratable
   has_many :product_effects, as: :effectable, dependent: :destroy
   has_many :effects, through: :product_effects
   validates :thc, presence: true, numericality: { greater_than_or_equal_to: 0, less_than_or_equal_to: 100 }
+
+
+  def embedding_content
+    [ strain, thc.to_s, effects.pluck(:name).join(", ") ].compact.join(" ")
+  end
+
+  def update_embedding
+    self.embedding = RubyLLM.embed(embedding_content).vectors
+    save!
+  end
 end

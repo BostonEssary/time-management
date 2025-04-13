@@ -3,6 +3,7 @@
 # Table name: flowers
 #
 #  id         :bigint           not null, primary key
+#  embedding  :vector
 #  name       :string
 #  strain     :string
 #  thc        :float

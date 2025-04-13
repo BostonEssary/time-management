@@ -79,3 +79,9 @@ gem "requestjs-rails", "~> 0.0.12"
 gem "annotate", "~> 3.2", group: :development
 
 gem "kaminari", "~> 1.2"
+
+gem "ruby_llm", "~> 1.1"
+
+gem "pgvector", "~> 0.3.2"
+
+gem "neighbor", "~> 0.5.2"
