@@ -2,14 +2,15 @@
 #
 # Table name: flowers
 #
-#  id         :bigint           not null, primary key
-#  embedding  :vector
-#  name       :string
-#  strain     :string
-#  thc        :float
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
-#  brand_id   :bigint           not null
+#  id          :bigint           not null, primary key
+#  description :text
+#  embedding   :vector
+#  name        :string
+#  strain      :string
+#  thc         :float
+#  created_at  :datetime         not null
+#  updated_at  :datetime         not null
+#  brand_id    :bigint           not null
 #
 # Indexes
 #

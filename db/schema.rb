@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_04_13_075120) do
+ActiveRecord::Schema[7.2].define(version: 2025_04_14_003946) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "vector"
@@ -87,6 +87,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_04_13_075120) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.vector "embedding"
+    t.text "description"
     t.index ["brand_id"], name: "index_flowers_on_brand_id"
     t.index ["name", "brand_id"], name: "index_flowers_on_name_and_brand_id", unique: true
   end
@@ -109,6 +110,27 @@ ActiveRecord::Schema[7.2].define(version: 2025_04_13_075120) do
     t.datetime "updated_at", null: false
     t.index ["likeable_type", "likeable_id"], name: "index_likes_on_likeable"
     t.index ["user_id"], name: "index_likes_on_user_id"
+  end
+
+  create_table "maintenance_tasks_runs", force: :cascade do |t|
+    t.string "task_name", null: false
+    t.datetime "started_at", precision: nil
+    t.datetime "ended_at", precision: nil
+    t.float "time_running", default: 0.0, null: false
+    t.bigint "tick_count", default: 0, null: false
+    t.bigint "tick_total"
+    t.string "job_id"
+    t.string "cursor"
+    t.string "status", default: "enqueued", null: false
+    t.string "error_class"
+    t.string "error_message"
+    t.text "backtrace"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.text "arguments"
+    t.integer "lock_version", default: 0, null: false
+    t.text "metadata"
+    t.index ["task_name", "status", "created_at"], name: "index_maintenance_tasks_runs", order: { created_at: :desc }
   end
 
   create_table "pre_rolls", force: :cascade do |t|

@@ -85,3 +85,5 @@ gem "ruby_llm", "~> 1.1"
 gem "pgvector", "~> 0.3.2"
 
 gem "neighbor", "~> 0.5.2"
+
+gem "maintenance_tasks", "~> 2.11"
