@@ -47,4 +47,12 @@ module CannabisProduct
   def ratings_by_date
     ratings.order(created_at: :desc)
   end
+
+  def average_score
+    ratings.average(:score)
+  end
+
+  def ratings_count
+    ratings.count
+  end
 end

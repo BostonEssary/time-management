@@ -1,0 +1,7 @@
+<%= link_to polymorphic_path(product), class: 'flex flex-col md:flex-row bg-white rounded-md p-4 items-center gap-4' do %>
+  <%= image_tag product.images.first.variant(:thumb), class: 'w-32 h-32 object-cover' if product.images.attached? %>
+  <div>
+    <p class='text-sm font-bold'><%= product.name %></p>
+    <%= render 'shared/rating', score: product.average_score %>
+  </div>
+<% end %>

@@ -30,6 +30,12 @@ class Flower < ApplicationRecord
   validates :thc, presence: true, numericality: { greater_than_or_equal_to: 0, less_than_or_equal_to: 100 }
 
 
+
+  def neighbors
+    nearest_neighbors(:embedding, distance: "euclidean").first(5)
+  end
+
+
   def embedding_content
     [ strain, thc.to_s, effects.pluck(:name).join(", ") ].compact.join(" ")
   end

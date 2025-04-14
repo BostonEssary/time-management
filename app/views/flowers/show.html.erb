@@ -1,40 +1,45 @@
 <div class='flex flex-col gap-12 p-2 bg-primary-50 rounded-md'>
-  <div class='flex flex-col md:flex-row gap-6 flex-1'>
-    <div class='flex flex-col gap-4'>
-      <%= image_tag @flower.images.first.variant(:large) if @flower.images.attached? %>
-      <% if @flower.ratings.any? %>
-        <%= render 'shared/rating', score: @flower.ratings.average(:score) %>
-      <% end %>
-    </div>
-    <div class='flex flex-col gap-4'>
-      <div class='flex flex-col gap-4 '>
-        <div>
-          <h1 class='text-3xl font-bold'><%= @flower.name %></h1>
-          <%= link_to @flower.brand.name, brand_path(@flower.brand), class: 'font-light' %>
-        </div>
-        <div class='flex gap-2'>
-          <%= render 'shared/strain_popover', product: @flower %>
-          
-          <div class='flex gap-1 text-sm text-white bg-primary rounded-full p-2 w-fit'>
-            <p><%= @flower.thc %>%</p>
-            <p>THC</p>
-          </div>
-        </div>
-      </div>
-      <div class='flex gap-2'>
-        <% @flower.effects.each do |effect| %>
-          <%= effect_pill(effect.name) %>
+  <div class='flex flex-col md:flex-row gap-6'>
+    <div class='flex flex-col md:flex-row gap-6 flex-1'>
+      <div class='flex flex-col gap-4'>
+        <%= image_tag @flower.images.first.variant(:large) if @flower.images.attached? %>
+        <% if @flower.ratings.any? %>
+          <%= render 'shared/rating', score: @flower.ratings.average(:score) %>
         <% end %>
       </div>
-      <% if @flower.ratings.any? %>
-        <div class='flex flex-col gap-2'>
-          <p class='font-bold'>Latest Review</p>
-          <%= render 'ratings/rating_card', rating: @flower.latest_review %>
+      <div class='flex flex-col gap-4'>
+        <div class='flex flex-col gap-4 '>
+          <div>
+            <h1 class='text-3xl font-bold'><%= @flower.name %></h1>
+            <%= link_to @flower.brand.name, brand_path(@flower.brand), class: 'font-light' %>
+          </div>
+          <div class='flex gap-2'>
+            <%= render 'shared/strain_popover', product: @flower %>
+            <div class='flex gap-1 text-sm text-white bg-primary rounded-full p-2 w-fit'>
+              <p><%= @flower.thc %>%</p>
+              <p>THC</p>
+            </div>
+          </div>
         </div>
-      <% end %>
+        <div class='flex gap-2'>
+          <% @flower.effects.each do |effect| %>
+            <%= effect_pill(effect.name) %>
+          <% end %>
+        </div>
+        <% if @flower.ratings.any? %>
+          <div class='flex flex-col gap-2'>
+            <p class='font-bold'>Latest Review</p>
+            <%= render 'ratings/rating_card', rating: @flower.latest_review %>
+          </div>
+        <% end %>
+      </div>
     </div>
-  </div>
-  <div class='flex flex-col flex-1 gap-8'>
+    <div class='grow-0'>
+      <h2 class='text-lg font-bold'>Similar Products</h2>
+      <div class='flex overflow-x-auto md:flex-col gap-4'>
+        <%= render partial: 'flowers/recommendation_card', collection: @flower.neighbors, as: :product %>
+      </div>
+    </div>
   </div>
   <%= turbo_frame_tag 'new_rating' do %>
   <% end %>
