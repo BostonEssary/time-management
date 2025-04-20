@@ -23,7 +23,7 @@ module CannabisProduct
         staying productive throughout the day."
     }.freeze
 
-    belongs_to :brand
+    belongs_to :brand, optional: true
 
     has_many_attached :images do |attachable|
       attachable.variant :thumb, resize_to_fill: [ 250, 250 ]
@@ -31,7 +31,7 @@ module CannabisProduct
       attachable.variant :large, resize_to_fill: [ 400, 400 ]
     end
 
-    validates :name, :images, presence: true
+    validates :name, presence: true
     validates :strain, presence: true, inclusion: { in: STRAINS }
     validates :name, uniqueness: { scope: :brand, message: "A product with that name already exists for that brand" }
   end
