@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_04_14_003946) do
+ActiveRecord::Schema[7.2].define(version: 2025_04_20_213253) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "vector"
@@ -80,7 +80,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_04_14_003946) do
   end
 
   create_table "flowers", force: :cascade do |t|
-    t.bigint "brand_id", null: false
+    t.bigint "brand_id"
     t.string "name"
     t.float "thc"
     t.string "strain"
