@@ -11,7 +11,10 @@ module Maintenance
       result = Scrapers::StrainInfoService.new(url).call
       sens = result[:sensations]
       effects = derive_effects(sens)
-      flower = create_flower(result)
+      flower_id = create_flower(result)
+      flower = Flower.find(flower_id)
+      flower.effects << effects
+
 
       Rails.logger.info("Effects: #{effects}")
       Rails.logger.info("New Flower: #{flower}")
@@ -23,7 +26,8 @@ module Maintenance
 
       chat.with_tool(effect_tool)
       response = chat.ask(effects_prompt(sens))
-      response.content
+      names = response.content.split(",")
+      Effect.where(name: names)
     end
 
     def create_flower(result)
@@ -40,7 +44,7 @@ module Maintenance
     end
 
     def strain_prompt(result)
-      "Create a flower object with these results: #{result}. When doing the description, summarize the provided description to be 2-3 sentences and only provide important information."
+      "Create a flower object with these results: #{result}. When doing the description, summarize the provided description to be 2-3 sentences and only provide important information. You should return the id of the created flower object, nothing else. Anything else will invalidate the response"
     end
   end
 end

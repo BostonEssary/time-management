@@ -9,7 +9,8 @@ module Tools
 
     def execute(name:, thc:, strain:, description:)
       Rails.logger.info("Attributes: #{name}, #{thc}, #{strain}, #{description}")
-      Flower.create!(name:, thc:, strain:, description:)
+      flower = Flower.create!(name:, thc:, strain:, description:)
+      flower.id
     end
   end
 end
