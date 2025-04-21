@@ -11,9 +11,16 @@ module Maintenance
       result = Scrapers::StrainInfoService.new(url).call
       sens = result[:sensations]
       effects = derive_effects(sens)
-      flower_id = create_flower(result)
-      flower = Flower.find(flower_id)
+      create_flower(result)
+      flower = Flower.find_by(name: result[:name])
       flower.effects << effects
+      desc = flower.attributes.slice("name", "description")
+      image = generate_image(desc)
+      flower.images.attach(
+        io: image[:io],
+        filename: image[:filename],
+        content_type: image[:content_type]
+      )
 
 
       Rails.logger.info("Effects: #{effects}")
@@ -37,6 +44,24 @@ module Maintenance
       chat.with_tool(strain_tool)
       response = chat.ask(strain_prompt(result))
       response.content
+    end
+
+    def generate_image(desc)
+      image = RubyLLM.paint(image_generation_prompt(desc))
+
+      filename = "#{desc[:name]}.jpg"
+      io = StringIO.new(image.to_blob)
+      content_type = image.mime_type || "image/jpg"
+
+      {
+        io:,
+        filename:,
+        content_type:
+      }
+    end
+
+    def image_generation_prompt(desc)
+      "Make me an image of a piece of flower for this following strain info: #{desc}. Note that the picture should strive to be as realistic as possible and reflect on what the flower looks like in real life."
     end
 
     def effects_prompt(sens)

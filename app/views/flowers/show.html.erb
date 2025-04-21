@@ -1,7 +1,7 @@
 <div class='flex flex-col gap-12 p-2 bg-primary-50 rounded-md'>
   <div class='flex flex-col md:flex-row gap-6'>
     <div class='flex flex-col md:flex-row gap-6 flex-1'>
-      <div class='flex flex-col gap-4'>
+      <div class='flex flex-col gap-4 min-w-72'>
         <%= image_tag @flower.images.first.variant(:large) if @flower.images.attached? %>
         <% if @flower.ratings.any? %>
           <%= render 'shared/rating', score: @flower.ratings.average(:score) %>
@@ -11,7 +11,9 @@
         <div class='flex flex-col gap-4 '>
           <div>
             <h1 class='text-3xl font-bold'><%= @flower.name %></h1>
-            <%= link_to @flower.brand.name, brand_path(@flower.brand), class: 'font-light' %>
+            <% if @flower.brand %>
+              <%= link_to @flower.brand.name, brand_path(@flower.brand), class: 'font-light' %>
+            <% end %>
           </div>
           <div class='flex gap-2'>
             <%= render 'shared/strain_popover', product: @flower %>
@@ -25,6 +27,10 @@
           <% @flower.effects.each do |effect| %>
             <%= effect_pill(effect.name) %>
           <% end %>
+        </div>
+        <div class='flex flex-col gap-2'>
+          <h2 class='text-xl font-semibold'>Description</h2>
+          <%= @flower.description %>
         </div>
         <% if @flower.ratings.any? %>
           <div class='flex flex-col gap-2'>
