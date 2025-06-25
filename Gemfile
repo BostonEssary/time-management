@@ -79,3 +79,5 @@ gem "requestjs-rails", "~> 0.0.12"
 gem "annotate", "~> 3.2", group: :development
 
 gem "kaminari", "~> 1.2"
+
+gem "honeybadger"
