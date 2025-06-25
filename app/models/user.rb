@@ -45,4 +45,11 @@ class User < ApplicationRecord
   validates_uniqueness_of :username
   validates :username, presence: true
   validates :date_of_birth, comparison: { less_than_or_equal_to: 21.years.ago, message: "You must be 21 or older." }
+
+  after_create :attach_default_avatar
+
+  def attach_default_avatar
+    self.avatar.attach(io: File.open(Rails.root.join("app/assets/images/default-avatar.jpg")),
+                       filename: "default_avatar.png")
+  end
 end
